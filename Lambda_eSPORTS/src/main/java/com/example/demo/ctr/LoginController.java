@@ -9,17 +9,21 @@ import com.example.demo.service.LoginService;
 @RequestMapping("/auth")
 public class LoginController {
 
-    private final LoginService loginService = new LoginService();/*
+    private final LoginService loginService;
 
-    public LoginController(LoginController authService) {
+    public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
         if (loginService.authenticate(username, password)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", username); // Salva l'utente nella sessione
+            HttpSession session = request.getSession(true); // Crea una nuova sessione se non esiste
+            session.setAttribute("user", username);
+
+            System.out.println("Login effettuato. Session ID: " + session.getId());
+            System.out.println("User salvato nella sessione: " + session.getAttribute("user"));
+
             return "Login effettuato con successo!";
         } else {
             return "Credenziali errate";
@@ -33,5 +37,5 @@ public class LoginController {
             session.invalidate(); // Distrugge la sessione
         }
         return "Logout effettuato";
-    }*/
+    }
 }
