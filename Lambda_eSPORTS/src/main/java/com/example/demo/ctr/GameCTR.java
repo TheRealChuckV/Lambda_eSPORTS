@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.model.Corso;
 import com.example.demo.model.Game;
 import com.example.demo.repository.GameRepository;
 
@@ -52,7 +51,7 @@ public class GameCTR {
 
 	@GetMapping("preSearchGame")
 	public String preSearchGame(Model m) {
-		m.addAttribute("gameForm", new Corso());
+		m.addAttribute("gameForm", new Game());
 		return "searchGame";
 
 	}
@@ -68,7 +67,7 @@ public class GameCTR {
 
 	@GetMapping("preDeleteGame")
 	public String preDeleteGame(Model m) {
-		m.addAttribute("gameForm", new Corso());
+		m.addAttribute("gameForm", new Game());
 		return "deleteGame";
 
 	}
