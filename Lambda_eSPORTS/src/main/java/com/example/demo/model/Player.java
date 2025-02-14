@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class Player {
 
@@ -16,19 +17,21 @@ public class Player {
     String lastName;
     LocalDate registrationDate;
     String role;
+    LocalDate dateOfBirth;
 
-    public Player(String username, String password, String email, String firstName, String lastName, String role) {
+    public Player(String username, String rawPassword, String email, String firstName, String lastName, String role, LocalDate dateOfBirth) {
         this.username = username;
-        this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
-        this.registrationDate = LocalDate.now(); 
+        this.registrationDate = LocalDate.now();
+        this.dateOfBirth = dateOfBirth;
+        this.password = hashPassword(rawPassword);
     }
 
     public Player(int id, String username, String password, String email, String firstName, String lastName,
-            LocalDate registrationDate, String role) {
+            LocalDate registrationDate, String role, LocalDate dateOfBirth) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -37,6 +40,7 @@ public class Player {
         this.lastName = lastName;
         this.registrationDate = registrationDate;
         this.role = role;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Player() {
@@ -107,9 +111,27 @@ public class Player {
         this.role = role;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    private String hashPassword(String rawPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(rawPassword);
+    }
+
+    public boolean checkPassword(String rawPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(rawPassword, this.password);
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(email, firstName, id, lastName, password, registrationDate, role, username);
+        return Objects.hash(dateOfBirth, email, firstName, id, lastName, password, registrationDate, role, username);
     }
 
     @Override
@@ -118,7 +140,7 @@ public class Player {
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if (getClass()!= obj.getClass())
             return false;
         Player other = (Player) obj;
         return id == other.id;
@@ -127,7 +149,6 @@ public class Player {
     @Override
     public String toString() {
         return "Player [id=" + id + ", username=" + username + ", email=" + email + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", registrationDate=" + registrationDate + ", role=" + role + "]";
+                + ", lastName=" + lastName + ", registrationDate=" + registrationDate + ", role=" + role + ", dateOfBirth=" + dateOfBirth + "]";
     }
-
 }
