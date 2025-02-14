@@ -2,33 +2,28 @@ package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import com.example.demo.model.Player;
+import com.example.demo.repository.PlayerRepository;
+
+import java.util.List;
+
 
 @Service
 public class LoginService {
-   /* private final PlayerRepository userRepository;
+	  private final PlayerRepository playerRepository;
 
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+	    public LoginService(PlayerRepository playerRepository) {
+	        this.playerRepository = playerRepository;
+	    }
 
-    public boolean authenticate(String username, String password) {
-        Optional<Player> user = userRepository.findByUsername(username);
-        return user.isPresent() && user.get().getPassword().equals(password);
-    }*/
-	 // Simuliamo un database in memoria con una mappa (username -> password)
-    private final Map<String, String> users = new HashMap<>();
+	    public boolean authenticate(String username, String password) {
+	    	List<Player> players = playerRepository.findByUsername(username);
+	    	for(Player p: players) {
+	    		if(p.getPassword().equals(password));
+	    		return true;
+	    	}
+	    	return false;
+	    }
 
-    public LoginService() {
-        // Aggiungiamo utenti di test
-        users.put("mario", "password123");
-        users.put("luigi", "supersecret");
-    }
 
-    public boolean authenticate(String username, String password) {
-    	System.out.println(username +"   " + password);
-        return users.containsKey(username) && users.get(username).equals(password);
-    }
 }
