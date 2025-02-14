@@ -1,5 +1,6 @@
 package com.example.demo.ctr;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,19 @@ public class GameCTR {
 	@Autowired
 	GameRepository gr;
 
+	@GetMapping("/")
+	public String home(Model model) {
+		Iterable<Game> games = gr.findAll();
+		List<Game> gamelist = new ArrayList<>();
+
+		for (Game game : games) {
+			gamelist.add(game);
+
+		}
+		model.addAttribute("gameForm", gamelist);
+		return "home";
+	}
+
 	@GetMapping("preInsertGame")
 	public String preInsertGame(Model m) {
 		Game g = new Game();
@@ -29,8 +43,8 @@ public class GameCTR {
 
 	@PostMapping("insertGame")
 	public String insertGame(@ModelAttribute("gameForm") Game g) {
-		System.out.println(
-				"hello" + " " + g.getId() + " " + g.getName() + " " + g.getDescription() + " " + g.getImage());
+		System.out
+				.println("hello" + " " + g.getId() + " " + g.getName() + " " + g.getDescription() + " " + g.getImage());
 		gr.save(g);
 		return "success";
 	}
@@ -42,11 +56,12 @@ public class GameCTR {
 		return "updateGame";
 
 	}
+
 	@PostMapping("updateGame")
-	public String updateGame(@ModelAttribute ("gameForm") Game g ) {
-	System.out.println("hello"+ " " + g.getId()+ g.getName()+g.getDescription());
-	gr.save(g);	
-	return "success";
+	public String updateGame(@ModelAttribute("gameForm") Game g) {
+		System.out.println("hello" + " " + g.getId() + g.getName() + g.getDescription());
+		gr.save(g);
+		return "success";
 	}
 
 	@GetMapping("preSearchGame")
@@ -74,8 +89,8 @@ public class GameCTR {
 
 	@PostMapping("deleteGame")
 	public String deleteGame(@ModelAttribute("gameForm") Game g) {
-		System.out.println(
-				"hello" + " " + g.getId() + " " + g.getName() + " " + g.getDescription() + " " + g.getImage());
+		System.out
+				.println("hello" + " " + g.getId() + " " + g.getName() + " " + g.getDescription() + " " + g.getImage());
 		gr.delete(g);
 		;
 		return "success";

@@ -11,4 +11,5 @@ import com.example.demo.model.Game;
 @Repository
 public interface GameRepository extends CrudRepository <Game,Integer>{
 	List<Game> findByName(String name);
+	
 }
