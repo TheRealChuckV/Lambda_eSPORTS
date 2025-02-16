@@ -9,5 +9,5 @@ import com.example.demo.model.Matches;
 import com.example.demo.model.Tournament;
 
 public interface MatchesRepository extends CrudRepository <Matches,Integer>{
-	List<Matches> findByTournament(Tournament tournament);
+	List<Matches> findById(Tournament id);
 }
