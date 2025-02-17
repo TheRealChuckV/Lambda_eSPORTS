@@ -3,8 +3,11 @@ package com.example.demo.model;
 import java.sql.Date;
 import java.util.Objects;
 
-import org.springframework.data.annotation.Id;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Tournament {
 	@Id
 	int id;

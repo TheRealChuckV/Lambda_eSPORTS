@@ -42,7 +42,7 @@ public class TournamentServiceImpl implements TournamentService {
 
 		if (!tr.findByNPlayer(n).isEmpty()) {
 			trnmts = tr.findByNPlayer(n);
-			
+
 		}
 		return trnmts;
 	}
@@ -53,8 +53,8 @@ public class TournamentServiceImpl implements TournamentService {
 	}
 
 	// Salva un nuovo utente
-	public Tournament saveTournament(Tournament trmt) {
-		return tr.save(trmt);
+	public void saveTournament(Tournament trnmt) {
+		tr.save(trnmt);
 	}
 
 	// Elimina un utente per ID
