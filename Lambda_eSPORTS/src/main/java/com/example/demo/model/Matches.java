@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
 
@@ -9,18 +10,19 @@ public class Matches {
 	@Id
 	private int id;
 	private Tournament tournament;
-	private Player player1;
-	private Player player2;
+	private List<Player> team1;
+	private List<Player> team2;
 	private LocalDateTime dateTime;
 	private String result;
 
 	public Matches() {
 	}
 
-	public Matches(Tournament tournament, Player player1, Player player2, LocalDateTime dateTime, String result) {
+	public Matches(Tournament tournament, List<Player> team1, List<Player> team2, LocalDateTime dateTime,
+			String result) {
 		this.tournament = tournament;
-		this.player1 = player1;
-		this.player2 = player2;
+		this.team1 = team1;
+		this.team2 = team2;
 		this.dateTime = dateTime;
 		this.result = result;
 	}
@@ -41,20 +43,20 @@ public class Matches {
 		this.tournament = tournament;
 	}
 
-	public Player getPlayer1() {
-		return player1;
+	public List<Player> getTeam1() {
+		return team1;
 	}
 
-	public void setPlayer1(Player player1) {
-		this.player1 = player1;
+	public void setTeam1(List<Player> team1) {
+		this.team1 = team1;
 	}
 
-	public Player getPlayer2() {
-		return player2;
+	public List<Player> getTeam2() {
+		return team2;
 	}
 
-	public void setPlayer2(Player player2) {
-		this.player2 = player2;
+	public void setTeam2(List<Player> team2) {
+		this.team2 = team2;
 	}
 
 	public LocalDateTime getDateTime() {
@@ -90,7 +92,7 @@ public class Matches {
 
 	@Override
 	public String toString() {
-		return "Matches{" + "id=" + id + ", tournament=" + tournament + ", player1=" + player1 + ", player2=" + player2
+		return "Matches{" + "id=" + id + ", tournament=" + tournament + ", team1=" + team1 + ", team2=" + team2
 				+ ", dateTime=" + dateTime + ", result='" + result + '\'' + '}';
 	}
 }
