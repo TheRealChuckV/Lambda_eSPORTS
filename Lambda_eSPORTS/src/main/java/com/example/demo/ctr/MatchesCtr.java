@@ -2,6 +2,8 @@ package com.example.demo.ctr;
 
 import com.example.demo.model.Matches;
 import com.example.demo.service.MatchesService;
+import com.example.demo.service.MatchesServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.util.List;
 public class MatchesCtr {
 
     @Autowired
-    private MatchesService matchesService;
+    private MatchesServiceImpl matchesService;
 
     @GetMapping
     public List<Matches> getAllMatches() {
