@@ -31,7 +31,7 @@ public class Tournament {
 	private List<TournamentPlayer> tournamentPlayers;
 	
 	@OneToMany(mappedBy="tournament")
-	private List<Match> matches;
+	private List<Matches> matches;
 	
 	public Tournament(String name, Date startDate, Date endDate, int nPlayer, String description, String prize,
 			Game game, Player creator) {
@@ -128,11 +128,11 @@ public class Tournament {
 		this.tournamentPlayers = tournamentPlayers;
 	}
 
-	public List<Match> getMatches() {
+	public List<Matches> getMatches() {
 		return matches;
 	}
 
-	public void setMatches(List<Match> matches) {
+	public void setMatches(List<Matches> matches) {
 		this.matches = matches;
 	}
 
