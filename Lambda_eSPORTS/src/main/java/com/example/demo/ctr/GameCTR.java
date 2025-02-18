@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.model.Game;
 import com.example.demo.repository.GameRepository;
-import com.example.demo.services.GameServiceImp;
+import com.example.demo.service.GameServiceImp;
 
 @Controller
 @RequestMapping("mioindirizzo")

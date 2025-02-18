@@ -1,43 +1,20 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Matches;
-import com.example.demo.repository.MatchesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class MatchesService {
 
-    @Autowired
-    private MatchesRepository matchesRepository;
+public interface MatchesService {
 
-    public List<Matches> getAllMatches() {
-        return matchesRepository.findAll();
-    }
+	List<Matches> getAllMatches();
 
-    public Matches getMatchById(int id) {
-        Optional<Matches> match = matchesRepository.findById(id);
-        return match.orElse(null);
-    }
+	Matches getMatchById(int id);
 
-    public Matches saveMatch(Matches match) {
-        return matchesRepository.save(match);
-    }
+	Matches saveMatch(Matches match);
 
-    public Matches updateMatch(int id, Matches match) {
-        Optional<Matches> existingMatch = matchesRepository.findById(id);
-        if (existingMatch.isPresent()) {
-            match.setId(id); // Assicurati che l'ID sia impostato
-            return matchesRepository.save(match);
-        } else {
-            return null;
-        }
-    }
+	Matches updateMatch(int id, Matches match);
 
-    public void deleteMatch(int id) {
-        matchesRepository.deleteById(id);
-    }
+	void deleteMatch(int id);
 }
