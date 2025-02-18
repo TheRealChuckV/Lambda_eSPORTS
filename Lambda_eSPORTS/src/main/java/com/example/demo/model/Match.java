@@ -2,14 +2,26 @@ package com.example.demo.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import org.springframework.data.annotation.Id;
 
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+
+@Entity
 public class Match {
 
 	@Id
 	private int id;
+	
+	@ManyToOne
 	private Tournament tournament;
+	
+	@ManyToOne
 	private Player player1;
+	
+	@ManyToOne
 	private Player player2;
 	private LocalDateTime dateTime;
 	private String result;

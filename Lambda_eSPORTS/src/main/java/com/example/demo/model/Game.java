@@ -1,14 +1,24 @@
 package com.example.demo.model;
 
-import org.springframework.data.annotation.Id;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Game {
 	@Id
 	private int id;
 	private String name;
 	private String description;
 	private String image;
-
+	@OneToMany(mappedBy = "game" )
+    private List<Tournament> tournaments = new ArrayList<>();
+	
 	public Game(int id, String name, String description, String image) {
 		super();
 		this.id = id;
@@ -52,6 +62,14 @@ public class Game {
 	public void setImage(String imagine) {
 		this.image = imagine;
 }
+
+	public List<Tournament> getTournaments() {
+		return tournaments;
+	}
+
+	public void setTournaments(List<Tournament> tournaments) {
+		this.tournaments = tournaments;
+	}
 
 	@Override
 	public String toString() {

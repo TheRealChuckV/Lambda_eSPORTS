@@ -13,13 +13,14 @@ import org.springframework.stereotype.Controller;
 
 import com.example.demo.model.Tournament;
 import com.example.demo.repository.TournamentRepository;
+import com.example.demo.service.TournamentService;
 
 @Controller
 @RequestMapping("tournaments")
 public class TournamentCtr {
 
 	@Autowired
-	private TournamentRepository tr;
+	private TournamentService ts;
 
 	// Aggiunge un torneo nel db
 
@@ -31,23 +32,21 @@ public class TournamentCtr {
 
 	@PostMapping("/addTournament")
 	public String addTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
-		tr.save(trmt);
-		// Reindirizziamo alla pagina di successo
+		ts.saveTournament(trmt);
 		return "success";
 	}
 
 	// Aggiorna un torneo nel db
 
-	@GetMapping("/preModifyTournament")
+	@GetMapping("/preUpdateTournament")
 	public String preModifyTournament(Model model) {
 		model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
-		return "modifyTournament"; // Nome della pagina JSP senza estensione
+		return "updateTournament"; // Nome della pagina JSP senza estensione
 	}
 
-	@PostMapping("/modifayTournament")
-	public String modifyTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
-		tr.save(trmt);
-		// Reindirizziamo alla pagina di successo
+	@PostMapping("/updateTournament")
+	public String updateTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
+		ts.saveTournament(trmt);
 		return "success";
 	}
 
@@ -61,7 +60,7 @@ public class TournamentCtr {
 
 	@PostMapping("/deleteTournament")
 	public String deleteTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
-		tr.deleteById(trmt.getId());
+		ts.deleteTournament(trmt.getId());
 		// Reindirizziamo alla pagina di successo
 		return "success";
 	}
@@ -76,12 +75,7 @@ public class TournamentCtr {
 
 	@PostMapping("/findTournamentByGameId")
 	public String findTournamentByGameId(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
-		if (!tr.findByGameId(trmt.getGameId()).isEmpty()) {
-			List<Tournament> trmts = tr.findByGameId(trmt.getGameId());
-			model.addAttribute("tournamentForm", trmts);
-			System.out.println(trmts);
-			return "success";
-		}
+		model.addAttribute("tournamentForm", ts.getByGameId(trmt.getGame().getId()));
 		return null;
 	}
 
@@ -95,13 +89,9 @@ public class TournamentCtr {
 
 	@PostMapping("/findTournamentByNPlayer")
 	public String findTournamentByNPlayer(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
-		if (!tr.findByNPlayer(trmt.getnPlayer()).isEmpty()) {
-			List<Tournament> trmts = tr.findByNPlayer(trmt.getnPlayer());
-			model.addAttribute("tournamentForm", trmts);
-			System.out.println(trmts);
-			return "success";
-		}
-		return null;
+		model.addAttribute("tournamentForm", ts.getByNPlayer(trmt.getnPlayer()));
+		return "success";
+		
 	}
 	
 	// Trova un torneo nel db tramite la data di in inizio
@@ -114,13 +104,9 @@ public class TournamentCtr {
 
 		@PostMapping("/findTournamentByStartDate")
 		public String findTournamentByStartDate(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
-			if (!tr.findByStartDate(trmt.getStartDate()).isEmpty()) {
-				List<Tournament> trmts = tr.findByStartDate(trmt.getStartDate());
-				model.addAttribute("tournamentForm", trmts);
-				System.out.println(trmts);
-				return "success";
-			}
-			return null;
+			model.addAttribute("tournamentForm", ts.getByStartDate(trmt.getStartDate()));
+			return "success";
+
 		}
 
 }
