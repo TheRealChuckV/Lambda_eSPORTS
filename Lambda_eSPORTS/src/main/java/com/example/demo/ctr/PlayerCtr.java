@@ -111,7 +111,7 @@ public class PlayerCtr {
         return "findPlayerByUsername";
     }
 
-    @PostMapping("/findPlayerByUsername")
+    /*@PostMapping("/findPlayerByUsername")
     public String findPlayerByUsername(@ModelAttribute("playerForm") Player player, Model model,
             RedirectAttributes redirectAttributes) {
         List<Player> players = pr.findByUsername(player.getUsername());
@@ -122,7 +122,7 @@ public class PlayerCtr {
             redirectAttributes.addFlashAttribute("errorMessage", "Nessun giocatore trovato.");
             return "redirect:/players/preFindPlayerByUsername";
         }
-    }
+    }*/
 
     @GetMapping("/preFindPlayerByEmail")
     public String preFindPlayerByEmail(Model model) {
@@ -130,7 +130,7 @@ public class PlayerCtr {
         return "findPlayerByEmail";
     }
 
-    @PostMapping("/findPlayerByEmail")
+    /*@PostMapping("/findPlayerByEmail")
     public String findPlayerByEmail(@ModelAttribute("playerForm") Player player, Model model,
             RedirectAttributes redirectAttributes) {
         List<Player> players = pr.findByEmail(player.getEmail());
@@ -141,7 +141,7 @@ public class PlayerCtr {
             redirectAttributes.addFlashAttribute("errorMessage", "Nessun giocatore trovato.");
             return "redirect:/players/preFindPlayerByEmail";
         }
-    }
+    }*/
 
     @GetMapping("/list")
     public String listPlayers(Model model) {

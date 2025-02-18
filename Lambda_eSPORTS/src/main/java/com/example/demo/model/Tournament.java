@@ -1,10 +1,17 @@
 package com.example.demo.model;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
-import org.springframework.data.annotation.Id;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Tournament {
 	@Id
 	int id;
@@ -14,10 +21,20 @@ public class Tournament {
 	int nPlayer;
 	String description;
 	String prize;
-	int gameId;
-	int creatorId;
+	@ManyToOne
+	@JoinColumn(name="game_id")
+	Game game;
+	@ManyToOne
+	@JoinColumn(name="creator_id")
+	Player creator;
+	@OneToMany(mappedBy="tournament")
+	private List<TournamentPlayer> tournamentPlayers;
+	
+	@OneToMany(mappedBy="tournament")
+	private List<Match> matches;
+	
 	public Tournament(String name, Date startDate, Date endDate, int nPlayer, String description, String prize,
-			int gameId, int creatorId) {
+			Game game, Player creator) {
 		super();
 		this.name = name;
 		this.startDate = startDate;
@@ -25,12 +42,12 @@ public class Tournament {
 		this.nPlayer = nPlayer;
 		this.description = description;
 		this.prize = prize;
-		this.gameId = gameId;
-		this.creatorId = creatorId;
+		this.game = game;
+		this.creator = creator;
 	}
 	
 	public Tournament(int id, String name, Date startDate, Date endDate, int nPlayer, String description, String prize,
-			int gameId, int creatorId) {
+			Game game, Player creator) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -39,8 +56,8 @@ public class Tournament {
 		this.nPlayer = nPlayer;
 		this.description = description;
 		this.prize = prize;
-		this.gameId = gameId;
-		this.creatorId = creatorId;
+		this.game = game;
+		this.creator = creator;
 	}
 
 
@@ -90,21 +107,38 @@ public class Tournament {
 	public void setPrize(String prize) {
 		this.prize = prize;
 	}
-	public int getGameId() {
-		return gameId;
+	public Game getGame() {
+		return game;
 	}
-	public void setGameId(int gameId) {
-		this.gameId = gameId;
+	public void setGame(Game game) {
+		this.game = game;
 	}
-	public int getCreatorId() {
-		return creatorId;
+	public Player getCreator() {
+		return creator;
 	}
-	public void setCreatorId(int creatorId) {
-		this.creatorId = creatorId;
+	public void setCreator(Player creator) {
+		this.creator = creator;
 	}
+	
+	public List<TournamentPlayer> getTournamentplayers() {
+		return tournamentPlayers;
+	}
+
+	public void setTournamentplayers(List<TournamentPlayer> tournamentPlayers) {
+		this.tournamentPlayers = tournamentPlayers;
+	}
+
+	public List<Match> getMatches() {
+		return matches;
+	}
+
+	public void setMatches(List<Match> matches) {
+		this.matches = matches;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(creatorId, description, endDate, gameId, id, nPlayer, name, startDate);
+		return Objects.hash(creator, description, endDate, game, id, nPlayer, name, startDate);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -120,8 +154,8 @@ public class Tournament {
 	@Override
 	public String toString() {
 		return "Tournament [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", nPlayer=" + nPlayer + ", description=" + description + ", gameId=" + gameId + ", creatorId="
-				+ creatorId + "]";
+				+ ", nPlayer=" + nPlayer + ", description=" + description + ", gameId=" + game + ", creatorId="
+				+ creator + "]";
 	}
 	
 	

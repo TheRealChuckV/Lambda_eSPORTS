@@ -1,23 +1,35 @@
 package com.example.demo.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
-import org.springframework.data.annotation.Id;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Player {
 
     @Id
-    int id;
-    String username;
-    String password;
-    String email;
-    String firstName;
-    String lastName;
-    LocalDate registrationDate;
-    String role;
-    LocalDate dateOfBirth;
+    private int id;
+    private String username;
+    private String password;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private LocalDate registrationDate;
+    private String role;
+    private LocalDate dateOfBirth;
+    @OneToMany(mappedBy = "player")
+    private Set<TournamentPlayer> trnmntPlayer;
+
+	@OneToMany(mappedBy="creator")
+	private List<Tournament> tournaments;
 
     public Player(String username, String rawPassword, String email, String firstName, String lastName, String role, LocalDate dateOfBirth) {
         this.username = username;
@@ -55,7 +67,15 @@ public class Player {
         this.id = id;
     }
 
-    public String getUsername() {
+    public Set<TournamentPlayer> getTrnmntPlayer() {
+		return trnmntPlayer;
+	}
+
+	public void setTrnmntPlayer(Set<TournamentPlayer> trnmntPlayer) {
+		this.trnmntPlayer = trnmntPlayer;
+	}
+
+	public String getUsername() {
         return username;
     }
 
@@ -119,7 +139,15 @@ public class Player {
         this.dateOfBirth = dateOfBirth;
     }
 
-    private String hashPassword(String rawPassword) {
+    public List<Tournament> getTournaments() {
+		return tournaments;
+	}
+
+	public void setTournaments(List<Tournament> tournaments) {
+		this.tournaments = tournaments;
+	}
+
+	private String hashPassword(String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(rawPassword);
     }
