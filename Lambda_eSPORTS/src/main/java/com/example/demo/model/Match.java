@@ -1,98 +1,112 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
+@Entity
 public class Matches {
 
-	@Id
-	private int id;
-	private Tournament tournament;
-	private List<Player> team1;
-	private List<Player> team2;
-	private LocalDateTime dateTime;
-	private String result;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public Matches() {
-	}
+    @ManyToOne
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
 
-	public Matches(Tournament tournament, List<Player> team1, List<Player> team2, LocalDateTime dateTime,
-			String result) {
-		this.tournament = tournament;
-		this.team1 = team1;
-		this.team2 = team2;
-		this.dateTime = dateTime;
-		this.result = result;
-	}
+    @ManyToOne
+    @JoinColumn(name = "team1_id")
+    private Team team1;
 
-	public int getId() {
-		return id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "team2_id")
+    private Team team2;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private LocalDateTime dateTime;
+    private String result;
 
-	public Tournament getTournament() {
-		return tournament;
-	}
+    public Matches() {
+    }
 
-	public void setTournament(Tournament tournament) {
-		this.tournament = tournament;
-	}
+    public Matches(Tournament tournament, Team team1, Team team2, LocalDateTime dateTime, String result) {
+        this.tournament = tournament;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.dateTime = dateTime;
+        this.result = result;
+    }
 
-	public List<Player> getTeam1() {
-		return team1;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setTeam1(List<Player> team1) {
-		this.team1 = team1;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public List<Player> getTeam2() {
-		return team2;
-	}
+    public Tournament getTournament() {
+        return tournament;
+    }
 
-	public void setTeam2(List<Player> team2) {
-		this.team2 = team2;
-	}
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
-	}
+    public Team getTeam1() {
+        return team1;
+    }
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
-	}
+    public void setTeam1(Team team1) {
+        this.team1 = team1;
+    }
 
-	public String getResult() {
-		return result;
-	}
+    public Team getTeam2() {
+        return team2;
+    }
 
-	public void setResult(String result) {
-		this.result = result;
-	}
+    public void setTeam2(Team team2) {
+        this.team2 = team2;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Matches matches = (Matches) o;
-		return id == matches.id;
-	}
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
 
-	@Override
-	public String toString() {
-		return "Matches{" + "id=" + id + ", tournament=" + tournament + ", team1=" + team1 + ", team2=" + team2
-				+ ", dateTime=" + dateTime + ", result='" + result + '\'' + '}';
-	}
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Matches matches = (Matches) o;
+        return id == matches.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Matches{" +
+                "id=" + id +
+                ", tournament=" + tournament +
+                ", team1=" + team1 +
+                ", team2=" + team2 +
+                ", dateTime=" + dateTime +
+                ", result='" + result + '\'' +
+                '}';
+    }
 }

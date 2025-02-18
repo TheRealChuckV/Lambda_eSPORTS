@@ -18,5 +18,8 @@ public interface PlayerService {
 
     List<Player> getPlayersByEmail(String email);
 
-    Player updatePlayer(Player player); 
+    Player updatePlayer(Player player);
+
+    
+    boolean isUsernameUnique(String username);
 }
