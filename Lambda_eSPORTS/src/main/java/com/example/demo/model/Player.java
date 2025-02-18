@@ -1,21 +1,15 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Player {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
     private String password;
@@ -25,11 +19,14 @@ public class Player {
     private LocalDate registrationDate;
     private String role;
     private LocalDate dateOfBirth;
-    @OneToMany(mappedBy = "player")
-    private Set<TournamentPlayer> trnmntPlayer;
 
-	@OneToMany(mappedBy="creator")
-	private List<Tournament> tournaments;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+
+    public Player() {
+    }
 
     public Player(String username, String rawPassword, String email, String firstName, String lastName, String role, LocalDate dateOfBirth) {
         this.username = username;
@@ -42,23 +39,6 @@ public class Player {
         this.password = hashPassword(rawPassword);
     }
 
-    public Player(int id, String username, String password, String email, String firstName, String lastName,
-            LocalDate registrationDate, String role, LocalDate dateOfBirth) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.registrationDate = registrationDate;
-        this.role = role;
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Player() {
-        super();
-    }
-
     public int getId() {
         return id;
     }
@@ -67,15 +47,7 @@ public class Player {
         this.id = id;
     }
 
-    public Set<TournamentPlayer> getTrnmntPlayer() {
-		return trnmntPlayer;
-	}
-
-	public void setTrnmntPlayer(Set<TournamentPlayer> trnmntPlayer) {
-		this.trnmntPlayer = trnmntPlayer;
-	}
-
-	public String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -139,15 +111,7 @@ public class Player {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Tournament> getTournaments() {
-		return tournaments;
-	}
-
-	public void setTournaments(List<Tournament> tournaments) {
-		this.tournaments = tournaments;
-	}
-
-	private String hashPassword(String rawPassword) {
+    private String hashPassword(String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(rawPassword);
     }
@@ -164,12 +128,8 @@ public class Player {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass()!= obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
         Player other = (Player) obj;
         return id == other.id;
     }
@@ -178,5 +138,13 @@ public class Player {
     public String toString() {
         return "Player [id=" + id + ", username=" + username + ", email=" + email + ", firstName=" + firstName
                 + ", lastName=" + lastName + ", registrationDate=" + registrationDate + ", role=" + role + ", dateOfBirth=" + dateOfBirth + "]";
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

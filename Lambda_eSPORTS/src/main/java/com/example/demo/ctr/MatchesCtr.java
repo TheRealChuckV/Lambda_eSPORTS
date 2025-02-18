@@ -24,11 +24,7 @@ public class MatchesCtr {
     @GetMapping("/{id}")
     public ResponseEntity<Matches> getMatchById(@PathVariable int id) {
         Matches match = matchesService.getMatchById(id);
-        if (match != null) {
-            return ResponseEntity.ok(match);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return match != null ? ResponseEntity.ok(match) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -40,11 +36,7 @@ public class MatchesCtr {
     @PutMapping("/{id}")
     public ResponseEntity<Matches> updateMatch(@PathVariable int id, @RequestBody Matches match) {
         Matches updatedMatch = matchesService.updateMatch(id, match);
-        if (updatedMatch != null) {
-            return ResponseEntity.ok(updatedMatch);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return updatedMatch != null ? ResponseEntity.ok(updatedMatch) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
