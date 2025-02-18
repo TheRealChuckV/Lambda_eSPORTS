@@ -30,11 +30,10 @@ public class MatchesService {
     public Matches updateMatch(int id, Matches match) {
         Optional<Matches> existingMatch = matchesRepository.findById(id);
         if (existingMatch.isPresent()) {
-            match.setId(id); // Assicurati che l'ID sia impostato
+            match.setId(id);
             return matchesRepository.save(match);
-        } else {
-            return null;
         }
+        return null;
     }
 
     public void deleteMatch(int id) {

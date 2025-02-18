@@ -1,23 +1,32 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
-
-import org.springframework.data.annotation.Id;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Entity
 public class Player {
 
     @Id
-    int id;
-    String username;
-    String password;
-    String email;
-    String firstName;
-    String lastName;
-    LocalDate registrationDate;
-    String role;
-    LocalDate dateOfBirth;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String username;
+    private String password;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private LocalDate registrationDate;
+    private String role;
+    private LocalDate dateOfBirth;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+
+    public Player() {
+    }
 
     public Player(String username, String rawPassword, String email, String firstName, String lastName, String role, LocalDate dateOfBirth) {
         this.username = username;
@@ -28,23 +37,6 @@ public class Player {
         this.registrationDate = LocalDate.now();
         this.dateOfBirth = dateOfBirth;
         this.password = hashPassword(rawPassword);
-    }
-
-    public Player(int id, String username, String password, String email, String firstName, String lastName,
-            LocalDate registrationDate, String role, LocalDate dateOfBirth) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.registrationDate = registrationDate;
-        this.role = role;
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Player() {
-        super();
     }
 
     public int getId() {
@@ -136,12 +128,8 @@ public class Player {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass()!= obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
         Player other = (Player) obj;
         return id == other.id;
     }
@@ -150,5 +138,13 @@ public class Player {
     public String toString() {
         return "Player [id=" + id + ", username=" + username + ", email=" + email + ", firstName=" + firstName
                 + ", lastName=" + lastName + ", registrationDate=" + registrationDate + ", role=" + role + ", dateOfBirth=" + dateOfBirth + "]";
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
