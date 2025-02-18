@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MatchesServiceImpl {
+public class MatchesServiceImpl implements MatchesService{
 
     @Autowired
     private MatchesRepository matchesRepository;
