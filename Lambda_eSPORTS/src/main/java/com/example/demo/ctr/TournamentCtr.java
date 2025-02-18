@@ -75,7 +75,7 @@ public class TournamentCtr {
 
 	@PostMapping("/findTournamentByGameId")
 	public String findTournamentByGameId(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
-		model.addAttribute("tournamentForm", ts.getByGameId(trmt.getGameId()));
+		model.addAttribute("tournamentForm", ts.getByGameId(trmt.getGame().getId()));
 		return null;
 	}
 

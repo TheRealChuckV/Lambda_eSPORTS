@@ -1,5 +1,6 @@
 package com.example.demo.ctr;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.model.Game;
 import com.example.demo.repository.GameRepository;
+import com.example.demo.services.GameServiceImp;
 
 @Controller
 @RequestMapping("mioindirizzo")
 public class GameCTR {
 	@Autowired
-	GameRepository gr;
+	GameServiceImp gr;
+
+	@GetMapping("/")
+	public String listGame(Model model) {
+		model.addAttribute("gameForm", gr.findAll());
+		return "home";
+	}
 
 	@GetMapping("preInsertGame")
 	public String preInsertGame(Model m) {
@@ -29,9 +37,7 @@ public class GameCTR {
 
 	@PostMapping("insertGame")
 	public String insertGame(@ModelAttribute("gameForm") Game g) {
-		System.out.println(
-				"hello" + " " + g.getId() + " " + g.getName() + " " + g.getDescription() + " " + g.getImage());
-		gr.save(g);
+		gr.insert(g);
 		return "success";
 	}
 
@@ -42,26 +48,23 @@ public class GameCTR {
 		return "updateGame";
 
 	}
+
 	@PostMapping("updateGame")
-	public String updateGame(@ModelAttribute ("gameForm") Game g ) {
-	System.out.println("hello"+ " " + g.getId()+ g.getName()+g.getDescription());
-	gr.save(g);	
-	return "success";
+	public String updateGame(@ModelAttribute("gameForm") Game g) {
+		gr.update(g);
+		return "success";
 	}
 
 	@GetMapping("preSearchGame")
 	public String preSearchGame(Model m) {
 		m.addAttribute("gameForm", new Game());
-		return "searchGame";
+		return "searchGameByName";
 
 	}
 
-	@PostMapping("searchGame")
+	@PostMapping("searchGameByName")
 	public String searchGame(@ModelAttribute("gameForm") Game g, Model m) {
-		System.out.println("hello" + " " + g.getId() + " " + g.getName() + " " + g.getDescription() + g.getImage());
-		List<Game> d = gr.findByName(g.getName());
-		System.out.println(d);
-		m.addAttribute("gameForm", d);
+		m.addAttribute("gameForm", gr.findbyName(g));
 		return "successD";
 	}
 
@@ -74,10 +77,8 @@ public class GameCTR {
 
 	@PostMapping("deleteGame")
 	public String deleteGame(@ModelAttribute("gameForm") Game g) {
-		System.out.println(
-				"hello" + " " + g.getId() + " " + g.getName() + " " + g.getDescription() + " " + g.getImage());
 		gr.delete(g);
-		;
+		
 		return "success";
 	}
 }
