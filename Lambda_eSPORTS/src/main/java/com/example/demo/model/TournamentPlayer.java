@@ -1,24 +1,31 @@
 package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class TournamentPlayer {
 	@Id
-	int id;
-	int playerId;
-	int tounramentId;
-	public TournamentPlayer(int id, int playerId, int tounramentId) {
+	private int id;
+	//int playerId;
+	@ManyToOne
+    @JoinColumn(name = "player_id")
+	private Player player;
+	@ManyToOne
+	@JoinColumn(name = "tournament_id")
+	private Tournament tournament;
+	public TournamentPlayer(int id, Player player, Tournament tournament) {
 		super();
 		this.id = id;
-		this.playerId = playerId;
-		this.tounramentId = tounramentId;
+		this.player = player;
+		this.tournament = tournament;
 	}
 		
-	public TournamentPlayer(int playerId, int tounramentId) {
+	public TournamentPlayer(Player player, Tournament tounrament) {
 		super();
-		this.playerId = playerId;
-		this.tounramentId = tounramentId;
+		this.player = player;
+		this.tournament = tounrament;
 	}
 
 	public TournamentPlayer() {
@@ -33,20 +40,20 @@ public class TournamentPlayer {
 		this.id = id;
 	}
 
-	public int getPlayerId() {
-		return playerId;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
-	public int getTounramentId() {
-		return tounramentId;
+	public Tournament getTournament() {
+		return tournament;
 	}
 
-	public void setTounramentId(int tounramentId) {
-		this.tounramentId = tounramentId;
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
 	}
 	
 }

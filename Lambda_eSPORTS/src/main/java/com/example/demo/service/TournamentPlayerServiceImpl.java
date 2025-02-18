@@ -6,7 +6,7 @@ public class TournamentPlayerServiceImpl implements TournamentPlayerService{
 
 	@Override
 	public void deleteFromTournament(int playerId, int trnmntId) {
-		TournamentPlayer tournamentPlayer = new TournamentPlayer(playerId, trnmntId);
+		//TournamentPlayer tournamentPlayer = new TournamentPlayer(playerId, trnmntId);
 		
 	}
 
