@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
 
-public class Matches {
+public class Match {
 
 	@Id
 	private int id;
@@ -14,10 +14,10 @@ public class Matches {
 	private LocalDateTime dateTime;
 	private String result;
 
-	public Matches() {
+	public Match() {
 	}
 
-	public Matches(Tournament tournament, Player player1, Player player2, LocalDateTime dateTime, String result) {
+	public Match(Tournament tournament, Player player1, Player player2, LocalDateTime dateTime, String result) {
 		this.tournament = tournament;
 		this.player1 = player1;
 		this.player2 = player2;
@@ -79,7 +79,7 @@ public class Matches {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Matches matches = (Matches) o;
+		Match matches = (Match) o;
 		return id == matches.id;
 	}
 

@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 
-import com.example.demo.model.Matches;
+import com.example.demo.model.Match;
 import com.example.demo.model.Tournament;
 
-public interface MatchesRepository extends CrudRepository <Matches,Integer>{
-	List<Matches> findById(Tournament id);
+public interface MatchRepository extends CrudRepository <Match,Integer>{
+	List<Match> findById(Tournament id);
 }
