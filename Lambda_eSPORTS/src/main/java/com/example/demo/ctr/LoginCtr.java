@@ -7,15 +7,15 @@ import com.example.demo.service.LoginService;
 
 @RestController
 @RequestMapping("/auth")
-public class LoginController {
+public class LoginCtr {
 
     private final LoginService loginService;
 
-    public LoginController(LoginService loginService) {
+    public LoginCtr(LoginService loginService) {
         this.loginService = loginService;
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
         if (loginService.authenticate(username, password)) {
             HttpSession session = request.getSession(true); // Crea una nuova sessione se non esiste

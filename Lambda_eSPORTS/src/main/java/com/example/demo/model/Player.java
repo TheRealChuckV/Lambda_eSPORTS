@@ -118,7 +118,8 @@ public class Player {
 
     public boolean checkPassword(String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.matches(rawPassword, this.password);
+        System.out.println(rawPassword);
+        return encoder.matches( this.password, rawPassword);
     }
 
     @Override
