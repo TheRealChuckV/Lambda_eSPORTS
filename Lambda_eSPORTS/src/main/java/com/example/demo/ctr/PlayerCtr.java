@@ -17,18 +17,19 @@ public class PlayerCtr {
 	@Autowired
 	private PlayerService playerService;
 
-	@GetMapping("/preAddPlayer")
+	@GetMapping("/preSignup")
 	public String preAddPlayer(Model model) {
 		model.addAttribute("playerForm", new Player());
-		return "addPlayer";
+		return "signup";
 	}
 
-	@PostMapping("/addPlayer")
+	@PostMapping("/signup")
 	public String addPlayer(@ModelAttribute("playerForm") Player player, RedirectAttributes redirectAttributes) {
+		System.out.println(player);
 		try {
 			playerService.savePlayer(player);
 			redirectAttributes.addFlashAttribute("successMessage", "Giocatore aggiunto con successo!");
-			return "redirect:/players/list";
+			return "home";
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Errore: " + e.getMessage());
 			return "redirect:/players/preAddPlayer";
