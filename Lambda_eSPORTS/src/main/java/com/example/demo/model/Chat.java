@@ -1,17 +1,28 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
+@Entity
 public class Chat {
-	private int idChat;
+	@Id
+	private int id;
 	private String message;
+	
+	
+	@ManyToOne
 	private Tournament tournament;
+	
+	
+	@ManyToOne
 	private Player player;
 
 	
 
-	public Chat(int idChat, String message, Tournament tournament, Player player) {
+	public Chat(int id, String message, Tournament tournament, Player player) {
 		super();
-		this.idChat = idChat;
+		this.id = id;
 		this.message = message;
 		this.tournament = tournament;
 		this.player = player;
@@ -22,11 +33,11 @@ public class Chat {
 	}
 
 	public int getIdChat() {
-		return idChat;
+		return id;
 	}
 
 	public void setIdChat(int idChat) {
-		this.idChat = idChat;
+		this.id = idChat;
 	}
 
 	public Tournament getTournament() {
@@ -55,7 +66,7 @@ public class Chat {
 
 	@Override
 	public String toString() {
-		return "Chat [idChat=" + idChat + ", tournament=" + tournament + ", player=" + player + "]";
+		return "Chat [idChat=" + id + ", tournament=" + tournament + ", player=" + player + "]";
 	}
 
 }

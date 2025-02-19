@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -20,6 +21,11 @@ public class Player {
     private String role;
     private LocalDate dateOfBirth;
 
+    
+    @OneToMany
+    @JoinColumn(name="id_chat")
+    private List<Chat> message;
+    
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;

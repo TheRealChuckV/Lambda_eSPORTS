@@ -8,9 +8,8 @@ import jakarta.persistence.ManyToOne;
 public class TournamentPlayer {
 	@Id
 	private int id;
-	//int playerId;
 	@ManyToOne
-    @JoinColumn(name = "player_id")
+   @JoinColumn(name = "player_id")
 	private Player player;
 	@ManyToOne
 	@JoinColumn(name = "tournament_id")

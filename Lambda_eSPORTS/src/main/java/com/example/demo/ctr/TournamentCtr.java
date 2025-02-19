@@ -74,10 +74,10 @@ public class TournamentCtr {
 	}
 
 	@PostMapping("/findTournamentByGameId")
-	public String findTournamentByGameId(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
-		model.addAttribute("tournamentForm", ts.getByGameId(trmt.getGame().getId()));
-		return null;
-	}
+	//public String findTournamentByGameId(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
+		//model.addAttribute("tournamentForm", ts.getByGameId(trmt.getGame().getId()));
+		//return null;
+	//}
 
 	// Trova un torneo nel db tramite in numero di giocatori
 
