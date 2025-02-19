@@ -29,7 +29,9 @@ public class Tournament {
 	Player creator;
 	@OneToMany(mappedBy="tournament")
 	private List<TournamentPlayer> tournamentPlayers;
-	
+	@OneToMany
+	@JoinColumn(name="id_chat")
+	private List<Chat> message;
 	@OneToMany(mappedBy="tournament")
 	private List<Matches> matches;
 	
@@ -125,9 +127,8 @@ public class Tournament {
 	}
 
 	public void setTournamentplayers(List<TournamentPlayer> tournamentPlayers) {
-		this.tournamentPlayers = tournamentPlayers;
+	this.tournamentPlayers = tournamentPlayers;
 	}
-
 	public List<Matches> getMatches() {
 		return matches;
 	}
