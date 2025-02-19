@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea Torneo - Lambda Esports</title>
+    <link rel="stylesheet" href="amministrazione.css"> 
+</head>
+<body>
+     <!-- Intestazione della pagina con logo e navigazione -->
+     <header class="header">
+        <h1 class="logo">
+            <a href="home.html">
+                <div class="logo-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Amazon_Lambda_architecture_logo.svg" alt="Lambda Esports Logo" class="logo-img-img">
+                    <div class="logo-text">
+                        <h2>LAMBDA ESPORTS</h2>
+                    </div>
+                </div>
+            </a>
+        </h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="home.html" class="nav-item">HOME</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="classifica.html" class="nav-item">CLASSIFICA</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="tornei.html" class="nav-item">TORNEI</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="areaPersonale.html" class="nav-item">AREA PERSONALE</a></li>
+            </ul>
+        </nav>
+    
+        <div class="user">
+            <a href="login.html" class="nav-item">Login</a>
+            <div class="user-icon">
+                <a href="login.html">
+                    <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Icon">
+                </a>
+                <div class="dropdown-menu">
+                    <form id="login-form">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" placeholder="Inserisci email" required>
+
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" placeholder="Inserisci password" required>
+
+                        <button type="submit">Accedi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="create-tournament">
+        <div class="CT"><h1>Crea un nuovo Torneo</h1></div>
+        <div class="form-container">
+            <form action="amministrazione.html">
+                <label for="tournament-name">Nome Torneo</label>
+                <input type="text" id="tournament-name" name="tournament-name" required>
+    
+                <label for="game">Gioco</label>
+                <div class="dropdown">
+                    <button class="dropdown-btn" onclick="toggleDropdown()" type="button">
+                        <img id="selected-img" src="https://www.shutterstock.com/image-vector/game-logo-design-template-stick-600nw-1041729025.jpg" alt="Selected Game">
+                        <span id="selected-text">seleziona gioco</span>
+                    </button>
+                    <div class="dropdown-content" id="dropdown-list">
+                        <div onclick="selectGame('League of Legends', 'https://brand.riotgames.com/static/a91000434ed683358004b85c95d43ce0/8a20a/lol-logo.png')">
+                            <img src="https://wallpapers.com/images/featured/1920x1080-league-of-legends-background-m54i08fbn7lnv13f.jpg" alt="LOL"> LoL - League of Legends
+                        </div>
+                        <div onclick="selectGame('FC25', 'https://images2.minutemediacdn.com/image/upload/c_crop,w_1499,h_843,x_0,y_0/c_fill,w_1200,ar_4:3,f_auto,q_auto,g_auto/images/voltaxMediaLibrary/mmsport/esports_illustrated/01j1wg531pgeh02nkckz.jpg')">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/0/09/EA_FC_25_Cover.jpg" alt="FIFA"> FC25
+                        </div>
+                        <div onclick="selectGame('Call of Duty', 'https://images.seeklogo.com/logo-png/49/2/call-of-duty-2023-logo-png_seeklogo-493029.png')">
+                            <img src="https://imageio.forbes.com/specials-images/imageserve/67523cc07b4f7bd7fef3c51d/0x0.jpg?format=jpg&height=600&width=1200&fit=bounds" alt="COD"> COD - Call of Duty
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="game" name="game" value="League of Legends">
+    
+                <label for="date">Data</label>
+                <input type="date" id="date" name="date" required>
+    
+                <label for="numSquadre">Numero di squadre:</label>
+                <select id="numSquadre" onchange="aggiornaPartecipanti()">
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                    <option value="16">16</option>
+                </select>
+        
+                <label for="giocatoriPerSquadra">Giocatori per squadra:</label>
+                <select id="giocatoriPerSquadra" onchange="aggiornaPartecipanti()">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+    
+                <h3>Partecipanti Totali: <span id="partecipantiTotali">4</span></h3>
+    
+                <button type="submit" class="submit-btn">Crea Torneo</button>
+            </form>
+        </div>
+    </main>
+</body>
+<script>
+    function togglePassword(fieldId, iconId) {
+        var field = document.getElementById(fieldId);
+        var icon = document.getElementById(iconId);
+
+        if (field.type === "password") {
+            field.type = "text";
+            icon.src = "https://cdn-icons-png.flaticon.com/512/159/159604.png"; // Occhio aperto
+        } else {
+            field.type = "password";
+            icon.src = "https://cdn-icons-png.flaticon.com/512/2767/2767146.png"; // Occhio chiuso
+        }
+    }
+
+    let hideTimeout;
+    const userIcon = document.querySelector(".user-icon img");
+    const dropdownMenu = document.querySelector(".dropdown-menu");
+
+    userIcon.addEventListener("mouseenter", () => {
+        clearTimeout(hideTimeout);
+        dropdownMenu.style.display = "block";
+    });
+
+    userIcon.addEventListener("mouseleave", () => {
+        hideTimeout = setTimeout(() => {
+            dropdownMenu.style.display = "none";
+        }, 3000);
+    });
+
+    dropdownMenu.addEventListener("mouseenter", () => {
+        clearTimeout(hideTimeout);
+    });
+
+    dropdownMenu.addEventListener("mouseleave", () => {
+        hideTimeout = setTimeout(() => {
+            dropdownMenu.style.display = "none";
+        }, 3000);
+    });
+    
+    function aggiornaPartecipanti() {
+        let numSquadre = document.getElementById("numSquadre").value;
+        let giocatoriPerSquadra = document.getElementById("giocatoriPerSquadra").value;
+        let partecipantiTotali = numSquadre * giocatoriPerSquadra;
+        document.getElementById("partecipantiTotali").textContent = partecipantiTotali;
+    }
+    function toggleDropdown() {
+            document.getElementById("dropdown-list").classList.toggle("show");
+        }
+
+        function selectGame(name, imgSrc) {
+            document.getElementById("selected-text").innerText = name;
+            document.getElementById("selected-img").src = imgSrc;
+            document.getElementById("game").value = name;
+            toggleDropdown();
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-btn') && !event.target.matches('.dropdown-btn img')) {
+                document.getElementById("dropdown-list").classList.remove("show");
+            }
+        }
+</script>
+</html>
