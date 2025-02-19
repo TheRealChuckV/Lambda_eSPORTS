@@ -14,5 +14,5 @@ public interface TournamentRepository extends CrudRepository<Tournament, Integer
 	
 	List<Tournament> findByGameId(int gameId);
 	List<Tournament> findByNPlayer(int nPlayer);
-	List<Tournament> findByStartDate(Date startDate);
+      List<Tournament> findByStartDate(Date startDate);
 }
