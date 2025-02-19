@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGh2eTBncHpycWNsbmFiZmtiY3NxdXBwajk3YmM4ZzNoanJ3ZWtndiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cqu4FuRXlQPI97IJ6G/giphy.gif');  /* Aggiungi qui il percorso della tua GIF */
+    background-size: cover;  /* Assicura che la GIF copra tutto lo schermo */
+    background-position: center;  /* Centra la GIF */
+    background-attachment: fixed;  /* Rende lo sfondo fisso durante lo scroll */
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* HEADER */
+.header {
+    background-color: #001f3f;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+
+.logo-img {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.logo-text h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcc00;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.user-icon {
+    position: relative;
+}
+
+.user-icon img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.user-icon:hover img {
+    transform: scale(1.1);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #333;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    width: 200px;
+    z-index: 10;
+}
+
+.user-icon:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu form {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-menu label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.dropdown-menu input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.dropdown-menu button {
+    background-color: #ffcc00;
+    color: black;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+    background-color: #e6b800;
+}
+
+/* CONTAINER LOGIN */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* BOX LOGIN */
+.login-box {
+    background-color: #001f3f; /* Blu scuro */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    width: 350px;
+    text-align: center;
+}
+
+/* TITOLO LOGIN */
+.login-box h2 {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 24px;
+}
+
+/* INPUT GROUP */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* BOTTONE LOGIN */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffcc00;
+    border: none;
+    color: black;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #e6b800;
+}
