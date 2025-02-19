@@ -1,12 +1,13 @@
 package com.example.demo.ctr;
 
 import com.example.demo.model.Team;
-import com.example.demo.service.TeamService;
+import com.example.demo.service.TeamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -14,7 +15,7 @@ import java.util.List;
 public class TeamCtr {
 
     @Autowired
-    private TeamService teamService;
+    private TeamServiceImpl teamService;
 
     @GetMapping
     public List<Team> getAllTeams() {
@@ -37,7 +38,7 @@ public class TeamCtr {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTeam);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Team> updateTeam(@PathVariable int id, @RequestBody Team team) {
         Team updatedTeam = teamService.updateTeam(id, team);
         if (updatedTeam != null) {
@@ -47,9 +48,14 @@ public class TeamCtr {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTeam(@PathVariable int id) {
         teamService.deleteTeam(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    @GetMapping("/participants")
+    public List<String> getParticipants() {
+        return Arrays.asList("Team 1", "Team 2", "Team 3", "Team 4", "Team 5", "Team 6", "Team 7", "Team 8");
     }
 }

@@ -14,7 +14,6 @@ public interface MatchesService {
 
 	public Matches saveMatch(Matches match);
 
-
 	public Matches updateMatch(int id, Matches match);
 
 	public void deleteMatch(int id);

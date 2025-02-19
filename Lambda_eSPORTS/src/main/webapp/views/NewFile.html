@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabellone Torneo Interattivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.css">
+    <style>
+        #tournament {
+            width: 100%;
+            overflow-x: auto;
+        }
+        .jQBracket .team {
+            font-size: 1.2em; /* Aumenta la dimensione del testo */
+            padding: 10px; /* Aumenta il padding */
+        }
+        .advance-button {
+            margin-top: 10px;
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="tournament"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.js"></script>
+    <script>
+        $(function() {
+            $.ajax({
+                url: '/api/teams/participants',
+                method: 'GET',
+                success: function(participants) {
+                    var teams = [];
+                    for (var i = 0; i < participants.length; i += 2) {
+                        teams.push([participants[i], participants[i + 1] || ""]);
+                    }
+
+                    var results = [];
+
+                    function renderAdvanceButton(match) {
+                        var button = $('<button class="advance-button">Avanza</button>');
+                        button.click(function() {
+                            var winner = match.first ? match.first.source().name : match.second.source().name;
+                            alert(winner + " avanza alla fase successiva!");
+                            // Logica per avanzare la squadra nel girone
+                        });
+                        return button;
+                    }
+
+                    function saveFn(data, userData) {
+                        var match = data;
+                        var button = renderAdvanceButton(match);
+                        $(data.el).append(button);
+                    }
+
+                    $('#tournament').bracket({
+                        init: {
+                            teams: teams,
+                            results: results
+                        },
+                        save: saveFn,
+                        disableToolbar: false,
+                        disableTeamEdit: false,
+                        userData: "custom"
+                    });
+                },
+                error: function(error) {
+                    console.error("Errore nel recupero dei partecipanti:", error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
