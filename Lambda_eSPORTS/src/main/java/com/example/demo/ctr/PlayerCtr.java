@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/players")
@@ -125,6 +124,14 @@ public class PlayerCtr {
 			redirectAttributes.addFlashAttribute("errorMessage", "Nessun giocatore trovato.");
 			return "redirect:/players/preFindPlayerByEmail";
 		}
+	}
+	
+	@GetMapping("/topRanking")
+	public String topRanking(Model model) {
+		List<Player> players = playerService.topRanking(); // Usa il service
+		System.out.println(players);
+		model.addAttribute("players", players);
+		return "ranking";
 	}
 
 	@GetMapping("/list")

@@ -29,9 +29,9 @@ public class LoginCtr {
 	@PostMapping("/login")
 	public void login(@RequestParam String loginString, @RequestParam String password, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		System.out.println(loginString);
+		System.out.println(loginString  + "LoginCtr");
 		HttpSession session = request.getSession(false); // Non crea una nuova sessione se non esiste
-		if (session != null && (session.getAttribute("username") != null)) {
+		if (session != null && ((session.getAttribute("username") != null) || (session.getAttribute("username") != null))) {
 			response.sendRedirect(request.getContextPath() + "/views/home.jsp");// Se già autenticato, redirect alla home
 		} else if (loginService.authenticate(loginString, password)) {
 			session = request.getSession(true); // Crea una nuova sessione se non esiste
@@ -39,7 +39,7 @@ public class LoginCtr {
 			else session.setAttribute("username", loginString);
 			response.sendRedirect(request.getContextPath() + "/views/home.jsp"); // Reindirizza alla dashboard
 		} else {
-			response.sendRedirect(request.getContextPath() + "/auth/login?error=true"); // Reindirizza alla login con
+			response.sendRedirect(request.getContextPath() + "/auth/login.jsp?error=true"); // Reindirizza alla login con
 																						// errore
 		}
 	}

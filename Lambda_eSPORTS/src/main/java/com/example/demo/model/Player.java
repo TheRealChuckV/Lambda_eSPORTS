@@ -20,6 +20,7 @@ public class Player {
     private LocalDate registrationDate;
     private String role;
     private LocalDate dateOfBirth;
+    private int score;
 
     
     @OneToMany
@@ -116,14 +117,35 @@ public class Player {
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+    
+    public int getScore() {
+		return score;
+	}
 
-    private String hashPassword(String rawPassword) {
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public void incrementScore(int score) {
+		this.setScore(score+this.getScore());
+	}
+
+	public List<Chat> getMessage() {
+		return message;
+	}
+
+	public void setMessage(List<Chat> message) {
+		this.message = message;
+	}
+
+	private String hashPassword(String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(rawPassword);
     }
 
     public boolean checkPassword(String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.matches(rawPassword, this.password));
         return encoder.matches(rawPassword, this.password);
     }
 

@@ -1,97 +1,87 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classifica - Lambda Esports</title>
-    <link rel="stylesheet" href="syle/amministation.css"> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classifica - Lambda Esports</title>
+<link rel="stylesheet" href="/style/amministration.css">
 </head>
 <body>
-     <!-- Intestazione della pagina con logo e navigazione -->
-     <header class="header">
-        <h1 class="logo">
-            <a href="home.html">
-                <div class="logo-img">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Amazon_Lambda_architecture_logo.svg" alt="Lambda Esports Logo" class="logo-img-img">
-                    <div class="logo-text">
-                        <h2>LAMBDA ESPORTS</h2>
-                    </div>
-                </div>
-            </a>
-        </h1>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="home.html" class="nav-item">HOME</a></li>
-                <li><p class="separator">|</p></li>
-                <li><a href="classifica.html" class="nav-item">CLASSIFICA</a></li>
-                <li><p class="separator">|</p></li>
-                <li><a href="tornei.html" class="nav-item">TORNEI</a></li>
-                <li><p class="separator">|</p></li>
-                <li><a href="areaPersonale.html" class="nav-item">AREA PERSONALE</a></li>
-            </ul>
-        </nav>
-    
-        <div class="user">
-            <a href="login.html" class="nav-item">Login</a>
-            <div class="user-icon">
-                <a href="login.html">
-                    <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Icon">
-                </a>
-                <div class="dropdown-menu">
-                    <form id="login-form">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" placeholder="Inserisci email" required>
+	<!-- Intestazione della pagina con logo e navigazione -->
+	<header class="header">
+		<h1 class="logo">
+			<a href="home.html">
+				<div class="logo-img">
+					<img
+						src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Amazon_Lambda_architecture_logo.svg"
+						alt="Lambda Esports Logo" class="logo-img-img">
+					<div class="logo-text">
+						<h2>LAMBDA ESPORTS</h2>
+					</div>
+				</div>
+			</a>
+		</h1>
+		<nav>
+			<ul class="nav-links">
+				<li><a href="home.jsp" class="nav-item">HOME</a></li>
+				<li><p class="separator">|</p></li>
+				<li><a href="ranking.jsp" class="nav-item">CLASSIFICA</a></li>
+				<li><p class="separator">|</p></li>
+				<li><a href="tornei.html" class="nav-item">TORNEI</a></li>
+				<li><p class="separator">|</p></li>
+				<li><a href="areaPersonale.html" class="nav-item">AREA
+						PERSONALE</a></li>
+			</ul>
+		</nav>
 
-                        <label for="password">Password:</label>
-                        <input type="password" id="password" placeholder="Inserisci password" required>
-
-                        <button type="submit">Accedi</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </header>
-    <main class="ranking-panel">
-        <div class="rank"><h1>Classifica Generale</h1></div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Posizione</th>
-                    <th>Giocatore</th>
-                    <th>Punteggio</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="first-rank">
-                        <td>1</td>
-                        <td>CosenoIperbolico <img class="img-giocatore" src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Img"></td>
-                        <td>2500</td>
-                </tr>
-                <tr class="second-rank">
-                        <td>2</td>
-                        <td>SenoIperbolico <img class="img-giocatore" src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Img"></td>
-                        <td>2499</td>
-                </tr>
-                <tr class="third-rank">
-                        <td>3</td>
-                        <td>tangenteIperbolica <img class="img-giocatore" src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Img"></td>
-                        <td>2498</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Coccodèimmondo <img class="img-giocatore" src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Img"></td>
-                    <td>2354</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>AleFrontend <img class="img-giocatore" src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Img"></td>
-                <td>2196</td>
-        </tr>
-            </tbody>
-        </table>
-    </main>
+		<div class="login-container">
+			<div class="login-box">
+				<h2>Login</h2>
+				<form id="login-form" action="/auth/login" method="post">
+					<div class="input-group">
+						<label for="loginString">Username/Email</label> <input type="text"
+							name="loginString" id="username"
+							placeholder="Inserisci l' username o l'email" required>
+					</div>
+					<div class="input-group">
+						<label for="password">Password</label> <input type="password"
+							name="password" id="password"
+							placeholder="Inserisci la tua password" required>
+					</div>
+					<button type="submit">Accedi</button>
+					<a href="/players/preSignup" class="nav-item"><small>Se
+							non hai un account Registrati qui.</small></a>
+				</form>
+			</div>
+		</div>
+	</header>
+	<main class="ranking-panel">
+		<div class="rank">
+			<h1>Classifica Generale</h1>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>Posizione</th>
+					<th>Giocatore</th>
+					<th>Punteggio</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="player" items="${players}" varStatus="status">
+					<tr class="${status.index == 0 ? 'first-rank' : (status.index == 1 ? 'second-rank' : (status.index == 2 ? 'third-rank' : ''))}">
+						<td>${status.index + 1}</td>
+						<%-- Mostra il numero della posizione --%>
+						<td>${player.username}</td>
+						<td>${player.score}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</main>
 </body>
 <script>
     function togglePassword(fieldId, iconId) {
