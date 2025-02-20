@@ -65,8 +65,8 @@ public class Player {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String rawPassword) {
+        this.password = hashPassword(rawPassword);
     }
 
     public String getEmail() {
@@ -124,8 +124,7 @@ public class Player {
 
     public boolean checkPassword(String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println(rawPassword);
-        return encoder.matches( this.password, rawPassword);
+        return encoder.matches(rawPassword, this.password);
     }
 
     @Override
@@ -154,4 +153,9 @@ public class Player {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

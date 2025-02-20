@@ -1,17 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lambda eSports</title>
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="/style/home.css">
 </head>
 <body class="bg-gray-900 text-white">
 
     <!-- HEADER -->
     <header class="header">
         <h1 class="logo">
-            <a href="home.html">
+            <a href="home.jsp">
                 <div class="logo-img">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Amazon_Lambda_architecture_logo.svg" 
                          alt="Lambda Esports Logo" class="logo-img-img">
@@ -23,7 +26,7 @@
         </h1>
         <nav>
             <ul class="nav-links">
-                <li><a href="home.html" class="nav-item">HOME</a></li>
+                <li><a href="home.jsp" class="nav-item">HOME</a></li>
                 <li><p class="separator">|</p></li>
                 <li><a href="classifica.html" class="nav-item">CLASSIFICA</a></li>
                 <li><p class="separator">|</p></li>
@@ -33,14 +36,14 @@
             </ul>
         </nav>
         <div class="user">
-            <a href="login.html" class="nav-item">Login</a>
+            <a href="login" class="nav-item">Login</a>
             <div class="user-icon">
-                <a href="login.html">
+                <a href="login">
                     <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Icon">
                 </a>
                 <div class="dropdown-menu">
-                    <form id="login-form">
-                        <label for="email">Email:</label>
+                    <form id="login-form" action="/auth/login" modelAttribute="playerForm" method="post">
+                        <label for="email">Username/Email:</label>
                         <input type="email" id="email" placeholder="Inserisci email" required>
 
                         <label for="password">Password:</label>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/players")
@@ -17,18 +18,23 @@ public class PlayerCtr {
 	@Autowired
 	private PlayerService playerService;
 
-	@GetMapping("/preAddPlayer")
-	public String preAddPlayer(Model model) {
-		model.addAttribute("playerForm", new Player());
-		return "addPlayer";
+	public PlayerCtr(PlayerService playerService) {
+		this.playerService = playerService;
 	}
 
-	@PostMapping("/addPlayer")
+	@GetMapping("/preSignup")
+	public String preAddPlayer(Model model) {
+		model.addAttribute("playerForm", new Player());
+		return "signup";
+	}
+
+	@PostMapping("/signup")
 	public String addPlayer(@ModelAttribute("playerForm") Player player, RedirectAttributes redirectAttributes) {
+		System.out.println(player);
 		try {
 			playerService.savePlayer(player);
 			redirectAttributes.addFlashAttribute("successMessage", "Giocatore aggiunto con successo!");
-			return "redirect:/players/list";
+			return "home";
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Errore: " + e.getMessage());
 			return "redirect:/players/preAddPlayer";
@@ -92,7 +98,7 @@ public class PlayerCtr {
 	@PostMapping("/findPlayerByUsername")
 	public String findPlayerByUsername(@ModelAttribute("playerForm") Player player, Model model,
 			RedirectAttributes redirectAttributes) {
-		List<Player> players = playerService.getPlayersByUsername(player.getUsername());
+		Player players = playerService.getPlayerByUsername(player.getUsername());
 		if (!players.isEmpty()) {
 			model.addAttribute("players", players);
 			return "playerList";
@@ -111,7 +117,7 @@ public class PlayerCtr {
 	@PostMapping("/findPlayerByEmail")
 	public String findPlayerByEmail(@ModelAttribute("playerForm") Player player, Model model,
 			RedirectAttributes redirectAttributes) {
-		List<Player> players = playerService.getPlayersByEmail(player.getEmail());
+		Player players = playerService.getPlayerByEmail(player.getEmail());
 		if (!players.isEmpty()) {
 			model.addAttribute("players", players);
 			return "playerList";

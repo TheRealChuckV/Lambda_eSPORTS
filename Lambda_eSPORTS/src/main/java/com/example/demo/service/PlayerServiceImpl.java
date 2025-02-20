@@ -37,13 +37,13 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public List<Player> getPlayersByUsername(String username) {
-        return playerRepository.findByUsername(username);
+    public Player getPlayerByUsername(String username) {
+        return playerRepository.findByUsernameIgnoreCase(username);
     }
 
     @Override
-    public List<Player> getPlayersByEmail(String email) {
-        return playerRepository.findByEmail(email);
+    public Player getPlayerByEmail(String email) {
+        return playerRepository.findByEmailIgnoreCase(email);
     }
 
     @Override
