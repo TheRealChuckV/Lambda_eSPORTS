@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/players")
@@ -16,6 +17,10 @@ public class PlayerCtr {
 
 	@Autowired
 	private PlayerService playerService;
+
+	public PlayerCtr(PlayerService playerService) {
+		this.playerService = playerService;
+	}
 
 	@GetMapping("/preSignup")
 	public String preAddPlayer(Model model) {
@@ -93,7 +98,7 @@ public class PlayerCtr {
 	@PostMapping("/findPlayerByUsername")
 	public String findPlayerByUsername(@ModelAttribute("playerForm") Player player, Model model,
 			RedirectAttributes redirectAttributes) {
-		List<Player> players = playerService.getPlayersByUsername(player.getUsername());
+		Player players = playerService.getPlayerByUsername(player.getUsername());
 		if (!players.isEmpty()) {
 			model.addAttribute("players", players);
 			return "playerList";
@@ -112,7 +117,7 @@ public class PlayerCtr {
 	@PostMapping("/findPlayerByEmail")
 	public String findPlayerByEmail(@ModelAttribute("playerForm") Player player, Model model,
 			RedirectAttributes redirectAttributes) {
-		List<Player> players = playerService.getPlayersByEmail(player.getEmail());
+		Player players = playerService.getPlayerByEmail(player.getEmail());
 		if (!players.isEmpty()) {
 			model.addAttribute("players", players);
 			return "playerList";

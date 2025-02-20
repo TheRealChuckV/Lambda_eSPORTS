@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -41,8 +42,8 @@
                     <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Icon">
                 </a>
                 <div class="dropdown-menu">
-                    <form id="login-form">
-                        <label for="email">Email:</label>
+                    <form id="login-form" action="/auth/login" modelAttribute="playerForm" method="post">
+                        <label for="email">Username/Email:</label>
                         <input type="email" id="email" placeholder="Inserisci email" required>
 
                         <label for="password">Password:</label>

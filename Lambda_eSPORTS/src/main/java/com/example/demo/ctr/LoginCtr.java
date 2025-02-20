@@ -1,4 +1,5 @@
 package com.example.demo.ctr;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -14,40 +15,41 @@ import com.example.demo.service.LoginService;
 @RequestMapping("/auth")
 public class LoginCtr {
 
-    private final LoginService loginService;
+	private final LoginService loginService;
 
-    public LoginCtr(LoginService loginService) {
-        this.loginService = loginService;
-    }
-    
-    @GetMapping("/login")
-    public String showLoginPage() {
-    	System.out.println("prova");
-        return "login"; 
-    }
+	public LoginCtr(LoginService loginService) {
+		this.loginService = loginService;
+	}
 
-    @PostMapping("/login")
-    public void login(@RequestParam String username, @RequestParam String password, 
-                      HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (loginService.authenticate(username, password)) {
-            HttpSession session = request.getSession(true); // Crea una nuova sessione se non esiste
-            session.setAttribute("user", username);
+	@GetMapping("/login")
+	public String showLoginPage() {
+		return "login";
+	}
 
-            System.out.println("Login effettuato con successo per: " + username);
-            response.sendRedirect(request.getContextPath() + "/dashboard"); // Reindirizza alla dashboard
-        } else {
-            System.out.println("Login fallito per: " + username);
-            response.sendRedirect(request.getContextPath() + "/auth/login?error=true"); // Reindirizza alla login con errore
-        }
-    }
+	@PostMapping("/login")
+	public void login(@RequestParam String loginString, @RequestParam String password, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		System.out.println(loginString);
+		HttpSession session = request.getSession(false); // Non crea una nuova sessione se non esiste
+		if (session != null && (session.getAttribute("username") != null)) {
+			response.sendRedirect(request.getContextPath() + "/views/home.jsp");// Se già autenticato, redirect alla home
+		} else if (loginService.authenticate(loginString, password)) {
+			session = request.getSession(true); // Crea una nuova sessione se non esiste
+			if(loginString.contains("@")) session.setAttribute("email", loginString);
+			else session.setAttribute("username", loginString);
+			response.sendRedirect(request.getContextPath() + "/views/home.jsp"); // Reindirizza alla dashboard
+		} else {
+			response.sendRedirect(request.getContextPath() + "/auth/login?error=true"); // Reindirizza alla login con
+																						// errore
+		}
+	}
 
-
-    @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate(); // Distrugge la sessione
-        }
-        return "Logout effettuato";
-    }
+	@PostMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate(); // Distrugge la sessione
+		}
+		return "Logout effettuato";
+	}
 }

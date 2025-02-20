@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -33,25 +34,6 @@
                     <li><a href="areaPersonale.html" class="nav-item">AREA PERSONALE</a></li>
                 </ul>
             </nav>
-            <div class="user">
-                <a href="login" class="nav-item">Login</a>
-                <div class="user-icon">
-                    <a href="login">
-                        <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Icon">
-                    </a>
-                    <div class="dropdown-menu">
-                        <form id="login-form">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" placeholder="Inserisci email" required>
-    
-                            <label for="password">Password:</label>
-                            <input type="password" id="password" placeholder="Inserisci password" required>
-    
-                            <button type="submit">Accedi</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
     
         </header>
 
@@ -59,14 +41,14 @@
         <div class="login-container">
             <div class="login-box">
                 <h2>Login</h2>
-                <form id="login-form">
+                <form id="login-form" action="/auth/login"  method="post" >
                     <div class="input-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" placeholder="Inserisci il tuo username" required>
+                        <label for="loginString">Username/Email</label>
+                        <input type="text" name="loginString" id="username" placeholder="Inserisci l' username o l'email" required>
                     </div>
                     <div class="input-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Inserisci la tua password" required>
+                        <input type="password" name="password" id="password" placeholder="Inserisci la tua password" required>
                     </div>
                     <button type="submit">Accedi</button>
                     <a href="/players/preSignup" class="nav-item"><small>Se non hai un account Registrati qui.</small></a>

@@ -1,10 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classifica - Lambda Esports</title>
-    <link rel="stylesheet" href="amministrazione.css"> 
+    <link rel="stylesheet" href="syle/amministation.css"> 
 </head>
 <body>
      <!-- Intestazione della pagina con logo e navigazione -->

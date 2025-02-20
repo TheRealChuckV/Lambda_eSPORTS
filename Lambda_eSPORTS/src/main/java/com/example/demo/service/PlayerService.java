@@ -14,9 +14,9 @@ public interface PlayerService {
 
     void deletePlayer(int id);
 
-    List<Player> getPlayersByUsername(String username);
+    Player getPlayerByUsername(String username);
 
-    List<Player> getPlayersByEmail(String email);
+    Player getPlayerByEmail(String email);
 
     Player updatePlayer(Player player);
 
