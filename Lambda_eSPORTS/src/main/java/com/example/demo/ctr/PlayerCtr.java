@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -29,7 +32,8 @@ public class PlayerCtr {
 
 	@PostMapping("/signup")
 	public String addPlayer(@ModelAttribute("playerForm") Player player, RedirectAttributes redirectAttributes) {
-		System.out.println(player);
+		player.setRole("Player");
+		player.setRegistrationDate(LocalDateTime.now());
 		try {
 			playerService.savePlayer(player);
 			redirectAttributes.addFlashAttribute("successMessage", "Giocatore aggiunto con successo!");

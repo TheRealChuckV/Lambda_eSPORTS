@@ -348,3 +348,241 @@ table tr:nth-child(even) {
     margin-bottom: 20px;
     color: yellowgreen;
 }
+
+/* carosello */ 
+
+.slider {
+    width: 90%; /* Adatta la larghezza in base al form */
+    height: 300px; /* Riduci l'altezza per allinearlo meglio */
+    margin: 0 auto; 
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.slides::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.slides::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
+}
+
+.slides::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.slides > div {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 100%; /* Occupa tutta la larghezza disponibile */
+    height: auto; /* L'altezza può variare automaticamente per mantenere il formato */
+   /* margin-right: 50px; */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Riempi la slide senza distorsioni */
+}
+
+/* Tasti di navigazione per 1, 2, 3 */
+.slider > a {
+    display: inline-flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: white;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 0 0.5rem 0;
+    position: relative;
+}
+
+.slider > a:active {
+    top: 1px;
+}
+
+.slider > a:focus {
+    background: #000;
+}
+
+/* Slide con immagini personalizzate */
+#slide-1, #slide-2, #slide-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.carousel-indicators a {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.5);
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.carousel-indicators a:hover {
+    background: #ffcc00;
+}
+
+.carousel {
+    position: relative;
+    width: 100%; /* Contenitore a larghezza piena */
+    overflow: hidden; /* Nascondi le immagini fuori dal contenitore */
+}
+
+/* Contenitore di tutte le slide */
+.slides {
+    display: flex; /* Allineamento delle immagini in orizzontale */
+    transition: transform 0.5s ease-in-out; /* Transizione per lo spostamento */
+}
+
+/* Ogni immagine deve occupare tutta la larghezza */
+.slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
+.carousel-indicators {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.indicator {
+    cursor: pointer;
+    padding: 1px;
+    margin: 4px;
+    font-size: 16px;
+}
+
+.indicator.active {
+    font-weight: bold;
+}
+
+/* Titoli sui giochi */
+.game-title {
+    position: absolute;
+    bottom: 45%; /* Puoi regolare questo valore per posizionarlo più in alto o più in basso */
+    left: 50%; /* Centra orizzontalmente */
+    transform: translateX(-50%); /* Sposta il titolo a sinistra di metà della sua larghezza */
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 5px;
+    border-radius: 5px;
+    visibility: visible;
+}
+
+/* Pulsanti di navigazione */
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 30px;
+    transition: 0.3s;
+}
+
+.prev-btn { left: 10px; }
+.next-btn { right: 10px; }
+
+.prev-btn:hover, .next-btn:hover {
+    background: rgba(255, 204, 0, 0.8);
+}
+
+/* Indicatori numerati */
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.indicator {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.5);
+    color: black;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.indicator:hover, .indicator.active {
+    background: #ffcc00;
+}
+
+.slide.active {
+    display: block;
+}
+
+.slides {
+    display: flex;
+    overflow: hidden;
+}
+
+.slide {
+    display: none; /* Nasconde tutte le slide */
+    width: 100%;
+    text-align: center;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+
+.slide {
+    flex: 0 0 100%; /* Ogni slide occupa il 100% della larghezza */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.slide.active {
+    opacity: 1;
+    position: relative;
+    z-index: 2;
+}
+

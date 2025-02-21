@@ -30,7 +30,7 @@
                 <li><p class="separator">|</p></li>
                 <li><a href="/players/topRanking" class="nav-item">CLASSIFICA</a></li>
                 <li><p class="separator">|</p></li>
-                <li><a href="tornei.html" class="nav-item">TORNEI</a></li>
+                <li><a href="tournaments.jsp" class="nav-item">TORNEI</a></li>
                 <li><p class="separator">|</p></li>
                 <li><a href="areaPersonale.html" class="nav-item">AREA PERSONALE</a></li>
             </ul>

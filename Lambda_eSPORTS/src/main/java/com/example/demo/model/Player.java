@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +18,7 @@ public class Player {
     private String email;
     private String firstName;
     private String lastName;
-    private LocalDate registrationDate;
+    private LocalDateTime registrationDate;
     private String role;
     private LocalDate dateOfBirth;
     private int score;
@@ -41,7 +42,7 @@ public class Player {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
-        this.registrationDate = LocalDate.now();
+        this.registrationDate = LocalDateTime.now();
         this.dateOfBirth = dateOfBirth;
         this.password = hashPassword(rawPassword);
     }
@@ -94,11 +95,11 @@ public class Player {
         this.lastName = lastName;
     }
 
-    public LocalDate getRegistrationDate() {
+    public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
+    public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
 
