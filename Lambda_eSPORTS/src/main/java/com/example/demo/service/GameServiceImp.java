@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Game;
@@ -9,6 +10,7 @@ import com.example.demo.repository.GameRepository;
 
 @Service
 public class GameServiceImp implements GameService {
+	@Autowired
 	GameRepository gr ;
 	
 	@Override

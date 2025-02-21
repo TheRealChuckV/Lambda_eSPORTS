@@ -45,6 +45,11 @@ public class PlayerServiceImpl implements PlayerService {
     public Player getPlayerByEmail(String email) {
         return playerRepository.findByEmailIgnoreCase(email);
     }
+    
+    @Override
+    public List<Player> topRanking(){
+    	return playerRepository.findTop10ByOrderByScoreDesc();
+    }
 
     @Override
     public Player updatePlayer(Player player) {

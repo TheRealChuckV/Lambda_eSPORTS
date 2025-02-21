@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,9 +18,10 @@ public class Player {
     private String email;
     private String firstName;
     private String lastName;
-    private LocalDate registrationDate;
+    private LocalDateTime registrationDate;
     private String role;
     private LocalDate dateOfBirth;
+    private int score;
 
     
     @OneToMany
@@ -40,7 +42,7 @@ public class Player {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
-        this.registrationDate = LocalDate.now();
+        this.registrationDate = LocalDateTime.now();
         this.dateOfBirth = dateOfBirth;
         this.password = hashPassword(rawPassword);
     }
@@ -93,11 +95,11 @@ public class Player {
         this.lastName = lastName;
     }
 
-    public LocalDate getRegistrationDate() {
+    public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
+    public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
 
@@ -116,14 +118,35 @@ public class Player {
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+    
+    public int getScore() {
+		return score;
+	}
 
-    private String hashPassword(String rawPassword) {
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public void incrementScore(int score) {
+		this.setScore(score+this.getScore());
+	}
+
+	public List<Chat> getMessage() {
+		return message;
+	}
+
+	public void setMessage(List<Chat> message) {
+		this.message = message;
+	}
+
+	private String hashPassword(String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(rawPassword);
     }
 
     public boolean checkPassword(String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.matches(rawPassword, this.password));
         return encoder.matches(rawPassword, this.password);
     }
 

@@ -19,7 +19,8 @@ public interface PlayerService {
     Player getPlayerByEmail(String email);
 
     Player updatePlayer(Player player);
-
+    
+    List<Player> topRanking();
     
     boolean isUsernameUnique(String username);
 }

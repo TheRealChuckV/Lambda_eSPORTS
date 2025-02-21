@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/players")
@@ -30,7 +32,8 @@ public class PlayerCtr {
 
 	@PostMapping("/signup")
 	public String addPlayer(@ModelAttribute("playerForm") Player player, RedirectAttributes redirectAttributes) {
-		System.out.println(player);
+		player.setRole("Player");
+		player.setRegistrationDate(LocalDateTime.now());
 		try {
 			playerService.savePlayer(player);
 			redirectAttributes.addFlashAttribute("successMessage", "Giocatore aggiunto con successo!");
@@ -125,6 +128,14 @@ public class PlayerCtr {
 			redirectAttributes.addFlashAttribute("errorMessage", "Nessun giocatore trovato.");
 			return "redirect:/players/preFindPlayerByEmail";
 		}
+	}
+	
+	@GetMapping("/topRanking")
+	public String topRanking(Model model) {
+		List<Player> players = playerService.topRanking(); // Usa il service
+		System.out.println(players);
+		model.addAttribute("players", players);
+		return "ranking";
 	}
 
 	@GetMapping("/list")

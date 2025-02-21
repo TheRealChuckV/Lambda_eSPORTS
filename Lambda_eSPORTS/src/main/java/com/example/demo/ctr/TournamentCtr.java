@@ -11,8 +11,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.example.demo.model.Game;
 import com.example.demo.model.Tournament;
-import com.example.demo.repository.TournamentRepository;
+import com.example.demo.service.GameService;
 import com.example.demo.service.TournamentService;
 
 @Controller
@@ -21,19 +22,24 @@ public class TournamentCtr {
 
 	@Autowired
 	private TournamentService ts;
+	@Autowired
+	private GameService gs;
 
 	// Aggiunge un torneo nel db
 
 	@GetMapping("/preAddTournament")
 	public String preAddTournament(Model model) {
-		model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
-		return "addTournament"; // Nome della pagina JSP senza estensione
+		List<Game> games = gs.findAll();
+		model.addAttribute("tournamentForm", new Tournament()); 
+		model.addAttribute("gameForm", games); // Aggiunta al model
+		return "createTournament"; // Nome della pagina JSP senza estensione
 	}
 
 	@PostMapping("/addTournament")
 	public String addTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
+		System.out.println(trmt);
 		ts.saveTournament(trmt);
-		return "success";
+		return "tournaments";
 	}
 
 	// Aggiorna un torneo nel db

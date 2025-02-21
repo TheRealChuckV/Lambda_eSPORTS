@@ -33,7 +33,6 @@ public class LoginFilter implements Filter {
 		if (session != null) {
 			String user = (String) session.getAttribute("username");
 			if (user != null && !user.isEmpty()) {
-				// Se la sessione contiene l'utente, lascia passare la richiesta
 				chain.doFilter(request, response);
 				return;
 			} else {

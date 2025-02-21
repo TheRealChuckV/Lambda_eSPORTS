@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classifica - Lambda Esports</title>
+<title>Tornei - Lambda Esports</title>
 <link rel="stylesheet" href="/style/amministration.css">
 </head>
 <body>
@@ -28,61 +28,39 @@
 			<ul class="nav-links">
 				<li><a href="home.jsp" class="nav-item">HOME</a></li>
 				<li><p class="separator">|</p></li>
-				<li><a href="ranking.jsp" class="nav-item">CLASSIFICA</a></li>
+				<li><a href="ranking.html" class="nav-item">CLASSIFICA</a></li>
 				<li><p class="separator">|</p></li>
-				<li><a href="tornei.html" class="nav-item">TORNEI</a></li>
+				<li><a href="tournament.jsp" class="nav-item">TORNEI</a></li>
 				<li><p class="separator">|</p></li>
 				<li><a href="areaPersonale.html" class="nav-item">AREA
 						PERSONALE</a></li>
 			</ul>
 		</nav>
-
-		<div class="login-container">
-			<div class="login-box">
-				<h2>Login</h2>
-				<form id="login-form" action="/auth/login" method="post">
-					<div class="input-group">
-						<label for="loginString">Username/Email</label> <input type="text"
-							name="loginString" id="username"
-							placeholder="Inserisci l' username o l'email" required>
-					</div>
-					<div class="input-group">
-						<label for="password">Password</label> <input type="password"
-							name="password" id="password"
-							placeholder="Inserisci la tua password" required>
-					</div>
-					<button type="submit">Accedi</button>
-					<a href="/players/preSignup" class="nav-item"><small>Se
-							non hai un account Registrati qui.</small></a>
-				</form>
-			</div>
-		</div>
 	</header>
-	<main class="ranking-panel">
-		<div class="rank">
-			<h1>Classifica Generale</h1>
+
+	<main class="tournament-panel">
+		<h1>Gestione Tornei</h1>
+
+		<div class="tournament-actions">
+			<form:form  action="/tournaments/preAddTournament"
+				modelAttribute="tournamentForm" method="get">
+				<button type="submit">Crea
+					Torneo</button>
+			</form:form>
+			<form:form id="login-form" action="/auth/login"
+				modelAttribute="playerForm" method="get">
+				<button type="submit">Accedi
+					Ad Un Torneo</button>
+			</form:form>
+			<form:form id="login-form" action="/auth/login"
+				modelAttribute="playerForm" method="get">
+				<button type="submit">Tornei A
+					Cui Partecipi</button>
+			</form:form>
 		</div>
-		<table>
-			<thead>
-				<tr>
-					<th>Posizione</th>
-					<th>Giocatore</th>
-					<th>Punteggio</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="player" items="${players}" varStatus="status">
-					<tr class="${status.index == 0 ? 'first-rank' : (status.index == 1 ? 'second-rank' : (status.index == 2 ? 'third-rank' : ''))}">
-						<td>${status.index + 1}</td>
-						<%-- Mostra il numero della posizione --%>
-						<td>${player.username}</td>
-						<td>${player.score}</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
 	</main>
 </body>
+<!-- Script finestra login -->
 <script>
     function togglePassword(fieldId, iconId) {
         var field = document.getElementById(fieldId);
