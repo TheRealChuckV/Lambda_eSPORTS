@@ -14,6 +14,7 @@ public class LoginServiceImpl implements LoginService{
 
 
 	    public boolean authenticate(String string, String password) {
+	    	System.out.println(string +"        "+password);
 	    	Player optionalPlayer;
 	        if (string.contains("@")) {
 	            optionalPlayer = playerService.getPlayerByEmail(string);

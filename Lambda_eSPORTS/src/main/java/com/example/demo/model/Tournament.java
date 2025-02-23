@@ -19,6 +19,7 @@ public class Tournament {
 	Date startDate;
 	Date endDate;
 	int nPlayer;
+	int actualNPlayer;
 	String description;
 	String prize;
 	@ManyToOne
@@ -97,6 +98,15 @@ public class Tournament {
 	public void setnPlayer(int nPlayer) {
 		this.nPlayer = nPlayer;
 	}
+	
+	public int getActualNPlayer() {
+		return actualNPlayer;
+	}
+
+	public void setActualNPlayer(int actualNPlayer) {
+		this.actualNPlayer = actualNPlayer;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -120,6 +130,14 @@ public class Tournament {
 	}
 	public void setCreator(Player creator) {
 		this.creator = creator;
+	}
+	
+	public void addPlayer() {
+		this.setActualNPlayer(this.getActualNPlayer()+1);
+	}
+	
+	public void removePlayer() {
+		this.setActualNPlayer(this.getActualNPlayer()-1);
 	}
 	
 	public List<TournamentPlayer> getTournamentplayers() {
