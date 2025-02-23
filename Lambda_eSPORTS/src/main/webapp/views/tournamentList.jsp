@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tornei - Lambda Esports</title>
+<title>Tornei Disponibili - Lambda Esports</title>
 <link rel="stylesheet" href="/style/amministration.css">
 </head>
 <body>
@@ -26,41 +27,71 @@
 		</h1>
 		<nav>
 			<ul class="nav-links">
-				<li><a href="home.jsp" class="nav-item">HOME</a></li>
+				<li><a href="home.html" class="nav-item">HOME</a></li>
 				<li><p class="separator">|</p></li>
-				<li><a href="ranking.html" class="nav-item">CLASSIFICA</a></li>
+				<li><a href="classifica.html" class="nav-item">CLASSIFICA</a></li>
 				<li><p class="separator">|</p></li>
-				<li><a href="tournament.jsp" class="nav-item">TORNEI</a></li>
+				<li><a href="tornei.html" class="nav-item">TORNEI</a></li>
 				<li><p class="separator">|</p></li>
 				<li><a href="areaPersonale.html" class="nav-item">AREA
 						PERSONALE</a></li>
 			</ul>
 		</nav>
+
+		<div class="user">
+			<a href="login.html" class="nav-item">Login</a>
+			<div class="user-icon">
+				<a href="login.html"> <img
+					src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"
+					alt="User Icon">
+				</a>
+				<div class="dropdown-menu">
+					<form id="login-form">
+						<label for="email">Email:</label> <input type="email" id="email"
+							placeholder="Inserisci email" required> <label
+							for="password">Password:</label> <input type="password"
+							id="password" placeholder="Inserisci password" required>
+
+						<button type="submit">Accedi</button>
+					</form>
+				</div>
+			</div>
+		</div>
 	</header>
 
-	<main class="tournament-panel">
-		<h1>Gestione Tornei</h1>
-
-		<div class="tournament-actions">
-			<form:form  action="/tournaments/preAddTournament"
-				modelAttribute="tournamentForm" method="get">
-				<button type="submit">Crea
-					Torneo</button>
-			</form:form>
-			<form:form id="login-form" action="/tournaments/tournaments"
-				modelAttribute="playerForm" method="get">
-				<button type="submit">Accedi
-					Ad Un Torneo</button>
-			</form:form>
-			<form:form id="login-form" action="/tournaments/myTournaments"
-				modelAttribute="playerForm" method="get">
-				<button type="submit">Tornei A
-					Cui Partecipi</button>
-			</form:form>
+	<main class="tournament-list">
+		<div class="Disp">
+			<h1>Tornei Disponibili</h1>
 		</div>
+		<table class="tournament-table">
+			<thead>
+				<tr>
+					<th>Nome Torneo</th>
+					<th>Gioco</th>
+					<th>Data</th>
+					<th>Posti Disponibili</th>
+					<th>Azioni</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="tournament" items="${tournaments}">
+					<tr>
+						<td>${tournament.name}</td>
+						<td>${tournament.game.name}</td>
+						<td>${tournament.startDate}</td>
+						<td>${tournament.actualNPlayer}/${tournament.nPlayer}</td>
+						<td>
+							<form:form action="/tournaments/join/${tournament.id}" method="post" >
+							<button class="join-btn" 
+								${tournament.actualNPlayer == tournament.nPlayer ? 'disabled' : ''}>Iscriviti</button>
+							 </form:form>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</main>
 </body>
-<!-- Script finestra login -->
 <script>
     function togglePassword(fieldId, iconId) {
         var field = document.getElementById(fieldId);
