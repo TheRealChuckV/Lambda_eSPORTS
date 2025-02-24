@@ -20,6 +20,7 @@ public class Tournament {
 	Date endDate;
 	int nPlayer;
 	int actualNPlayer;
+	int teamSize;
 	String description;
 	String prize;
 	@ManyToOne
@@ -36,20 +37,21 @@ public class Tournament {
 	@OneToMany(mappedBy="tournament")
 	private List<Matches> matches;
 	
-	public Tournament(String name, Date startDate, Date endDate, int nPlayer, String description, String prize,
+	public Tournament(String name, Date startDate, Date endDate, int nPlayer,int teamSize, String description, String prize,
 			Game game, Player creator) {
 		super();
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.nPlayer = nPlayer;
+		this.teamSize = teamSize;
 		this.description = description;
 		this.prize = prize;
 		this.game = game;
 		this.creator = creator;
 	}
 	
-	public Tournament(int id, String name, Date startDate, Date endDate, int nPlayer, String description, String prize,
+	public Tournament(int id, String name, Date startDate, Date endDate, int nPlayer, int teamSize, String description, String prize,
 			Game game, Player creator) {
 		super();
 		this.id = id;
@@ -57,6 +59,7 @@ public class Tournament {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.nPlayer = nPlayer;
+		this.teamSize = teamSize;
 		this.description = description;
 		this.prize = prize;
 		this.game = game;
@@ -105,6 +108,14 @@ public class Tournament {
 
 	public void setActualNPlayer(int actualNPlayer) {
 		this.actualNPlayer = actualNPlayer;
+	}
+
+	public int getTeamSize() {
+		return teamSize;
+	}
+
+	public void setTeamSize(int teamSize) {
+		this.teamSize = teamSize;
 	}
 
 	public String getDescription() {
