@@ -20,99 +20,95 @@ import com.example.demo.service.TournamentService;
 @RequestMapping("tournaments")
 public class TournamentCtr {
 
-	@Autowired
-	private TournamentService ts;
-	@Autowired
-	private GameService gs;
+    @Autowired
+    private TournamentService ts;
+    @Autowired
+    private GameService gs;
 
-	// Aggiunge un torneo nel db
+    // Aggiunge un torneo nel db
+    @GetMapping("/preAddTournament")
+    public String preAddTournament(Model model) {
+        List<Game> games = gs.findAll(); // Ottieni i giochi
+        model.addAttribute("tournamentForm", new Tournament());
+        model.addAttribute("gameForm", games); // Passa i giochi al model
+        return "createTournament"; // Nome della pagina JSP senza estensione
+    }
 
-	@GetMapping("/preAddTournament")
-	public String preAddTournament(Model model) {
-		List<Game> games = gs.findAll();
-		model.addAttribute("tournamentForm", new Tournament()); 
-		model.addAttribute("gameForm", games); // Aggiunta al model
-		return "createTournament"; // Nome della pagina JSP senza estensione
-	}
+    @PostMapping("/addTournament")
+    public String addTournament(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
+        // Recupera il gioco selezionato
+        Game selectedGame = gs.findAll().stream()
+                .filter(game -> game.getId() == trmt.getGame().getId())
+                .findFirst()
+                .orElse(null);
 
-	@PostMapping("/addTournament")
-	public String addTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
-		System.out.println(trmt);
-		ts.saveTournament(trmt);
-		return "tournaments";
-	}
+        if (selectedGame != null) {
+            trmt.setGame(selectedGame); // Imposta il gioco selezionato
+            ts.saveTournament(trmt); // Salva il torneo nel DB
+            return "redirect:/tournaments"; // Dopo aver aggiunto il torneo, reindirizza alla lista dei tornei
+        } else {
+            model.addAttribute("error", "Gioco non valido.");
+            return "createTournament"; // Ritorna alla pagina di creazione con errore
+        }
+    }
 
-	// Aggiorna un torneo nel db
+    // Cancella un torneo nel db
+    @GetMapping("/preDeleteTournament")
+    public String preDeleteTournament(Model model) {
+        model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
+        return "deleteTournament"; // Nome della pagina JSP senza estensione
+    }
 
-	@GetMapping("/preUpdateTournament")
-	public String preModifyTournament(Model model) {
-		model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
-		return "updateTournament"; // Nome della pagina JSP senza estensione
-	}
+    @PostMapping("/deleteTournament")
+    public String deleteTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
+        ts.deleteTournament(trmt.getId()); // Cancella il torneo dal DB
+        return "success"; // Reindirizza alla pagina di successo
+    }
 
-	@PostMapping("/updateTournament")
-	public String updateTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
-		ts.saveTournament(trmt);
-		return "success";
-	}
+    // Trova un torneo nel db tramite gioco
+    @GetMapping("/preFindTournamentByGameId")
+    public String preFindTournamentByGameId(Model model) {
+        List<Game> games = gs.findAll();
+        model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
+        model.addAttribute("gameForm", games); // Aggiunta al model
+        return "findTournamentByGameId"; // Nome della pagina JSP senza estensione
+    }
 
-	// Cancella un torneo nel db
+    @PostMapping("/findTournamentByGameId")
+    public String findTournamentByGameId(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
+        List<Tournament> tournaments = ts.getByGameId(trmt.getGame().getId()); // Recupera i tornei per gioco
+        model.addAttribute("tournaments", tournaments); // Aggiungi i tornei alla view
+        return "tournamentResults"; // Nome della pagina JSP che visualizza i risultati
+    }
 
-	@GetMapping("/preDeleteTournament")
-	public String preDeleteTournament(Model model) {
-		model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
-		return "deleteTournament"; // Nome della pagina JSP senza estensione
-	}
+    // Trova un torneo nel db tramite numero di giocatori
+    @GetMapping("/preFindTournamentByNPlayer")
+    public String preFindTournamentByNPlayer(Model model) {
+        model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
+        return "findTournamentByNPlayer"; // Nome della pagina JSP senza estensione
+    }
 
-	@PostMapping("/deleteTournament")
-	public String deleteTournament(@ModelAttribute("tournamentForm") Tournament trmt) {
-		ts.deleteTournament(trmt.getId());
-		// Reindirizziamo alla pagina di successo
-		return "success";
-	}
+    @PostMapping("/findTournamentByNPlayer")
+    public String findTournamentByNPlayer(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
+        List<Tournament> tournaments = ts.getByNPlayer(trmt.getnPlayer()); // Recupera tornei per numero di giocatori
+        model.addAttribute("tournaments", tournaments); // Aggiungi i tornei alla view
+        return "tournamentResults"; // Nome della pagina JSP che visualizza i risultati
+    }
 
-	// Trova un torneo nel db tramite gioco
+    // Trova un torneo nel db tramite la data di inizio
+    @GetMapping("/preFindTournamentByStartDate")
+    public String preFindTournamentByStartDate(Model model) {
+        model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
+        return "findTournamentByStartDate"; // Nome della pagina JSP senza estensione
+    }
 
-	@GetMapping("/preFindTournamentByGameId")
-	public String preFindTournamentByGameId(Model model) {
-		model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
-		return "findTournamentById"; // Nome della pagina JSP senza estensione
-	}
-
-	@PostMapping("/findTournamentByGameId")
-	//public String findTournamentByGameId(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
-		//model.addAttribute("tournamentForm", ts.getByGameId(trmt.getGame().getId()));
-		//return null;
-	//}
-
-	// Trova un torneo nel db tramite in numero di giocatori
-
-	@GetMapping("/preFindTournamentByNPlayer")
-	public String preFindTournamentByNPlayer(Model model) {
-		model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
-		return "findTournamentById"; // Nome della pagina JSP senza estensione
-	}
-
-	@PostMapping("/findTournamentByNPlayer")
-	public String findTournamentByNPlayer(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
-		model.addAttribute("tournamentForm", ts.getByNPlayer(trmt.getnPlayer()));
-		return "success";
-		
-	}
-	
-	// Trova un torneo nel db tramite la data di in inizio
-
-		@GetMapping("/preFindTournamentByStartDate")
-		public String preFindTournamentByStartDate(Model model) {
-			model.addAttribute("tournamentForm", new Tournament()); // Aggiunta al model
-			return "findTournamentByStartDate"; // Nome della pagina JSP senza estensione
-		}
-
-		@PostMapping("/findTournamentByStartDate")
-		public String findTournamentByStartDate(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
-			model.addAttribute("tournamentForm", ts.getByStartDate(trmt.getStartDate()));
-			return "success";
-
-		}
-
+    @PostMapping("/findTournamentByStartDate")
+    public String findTournamentByStartDate(@ModelAttribute("tournamentForm") Tournament trmt, Model model) {
+        List<Tournament> tournaments = ts.getByStartDate(trmt.getStartDate()); // Recupera tornei per data di inizio
+        model.addAttribute("tournaments", tournaments); // Aggiungi i tornei alla view
+        return "tournamentResults"; // Nome della pagina JSP che visualizza i risultati
+    }
 }
+
+
+

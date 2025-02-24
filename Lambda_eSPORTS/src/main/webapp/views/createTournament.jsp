@@ -70,32 +70,30 @@
 					name="tournament-name" required="true" />
 
 				<label for="game">Gioco</label>
-				<select id="game" name="game" required onchange="cambiaImmagine()">
+				<select id="game" name="game" required onchange="changeSlide()">
 					<c:forEach var="game" items="${gameForm}">
-						<option value="${game.id}"
-							data-game='{"id":"${game.id}", "name":"${game.name}", "image":"${game.image}"}'>
-							${game.name}</option>
+						<!-- L'attributo value DEVE corrispondere a data-game-id -->
+						<option value="${game.id}" data-game-id="${game.id}"
+							data-game-image="${game.image}">${game.name}</option>
 					</c:forEach>
 				</select>
 
 				<!-- Carosello -->
-				<div class="carousel">
-					<div class="slides" id="slides-container">
-						<c:forEach var="game" items="${gameForm}" varStatus="status">
-							<div class="slide ${status.first ? 'active' : ''}"
-								data-game-id="${game.id}">
-								<input type="hidden" class="game-img-hidden" name="gameImage">
-								<img class="game-img" alt="${game.id}" src="${game.image}">
-								<div class="game-title">${game.name}</div>
-							</div>
-						</c:forEach>
+				<div class="carousel-container">
+					<div class="carousel">
+						<div class="slides" id="slides-container">
+							<c:forEach var="game" items="${gameForm}" varStatus="status">
+								<div class="slide ${status.first ? 'active' : ''}"
+									data-game-id="${game.id}">
+									<input type="hidden" class="game-img-hidden" name="gameImage">
+									<img class="game-img" alt="${game.name}" src="${game.image}">
+									<div class="game-title">${game.name}</div>
+								</div>
+							</c:forEach>
+						</div>
+						<button class="prev-btn">&#10094;</button>
+						<button class="next-btn">&#10095;</button>
 					</div>
-
-					<!-- Pulsanti di navigazione -->
-					<div class="prev-btn" onclick="moveSlide(-1)">&#10094;</div>
-					<div class="next-btn" onclick="moveSlide(1)">&#10095;</div>
-
-					<!-- Indicatori numerati -->
 					<div class="carousel-indicators">
 						<c:forEach var="game" items="${gameForm}" varStatus="status">
 							<span class="indicator" onclick="goToSlide(${status.index})">${status.index + 1}</span>
@@ -137,142 +135,82 @@
 			</form:form>
 		</div>
 	</main>
-
 	<!-- SCRIPT PER GESTIRE IL CAROUSEL -->
 	<script>
-let currentSlide = 0;
-let slides = [];
-let indicators = [];
-let gameValues = [];
+	document.addEventListener("DOMContentLoaded", function () {
+	    const carousel = document.querySelector(".carousel .slides");
+	    const slides = document.querySelectorAll(".slide");
+	    const selectGame = document.getElementById("game");
+	    const nextButton = document.querySelector(".next-btn");
+	    const prevButton = document.querySelector(".prev-btn");
+	    const indicators = document.querySelectorAll(".indicator"); // Aggiungi questa riga per selezionare i pulsanti numerati
+	    let currentIndex = 0;
 
-// **LEGGE I DATI DIRETTAMENTE DALLA JSP**
-let games = [
-    <c:forEach var="game" items="${gameForm}" varStatus="status">
-        { id: "${game.id}", name: "${game.name}", image: "${game.image}" }<c:if test="${!status.last}">,</c:if>
-    </c:forEach>
-];
+	    function updateCarousel() {
+	        slides.forEach((slide, index) => {
+	            if (index === currentIndex) {
+	                slide.style.opacity = "1";
+	                slide.style.zIndex = "1";
+	            } else {
+	                slide.style.opacity = "0";
+	                slide.style.zIndex = "0";
+	            }
+	        });
+	        selectGame.value = slides[currentIndex].dataset.gameId;
+	        // Aggiorna l'aspetto dei pulsanti numerati
+	        indicators.forEach((indicator, index) => {
+	            if (index === currentIndex) {
+	                indicator.classList.add("active"); // Aggiungi una classe active al pulsante selezionato
+	            } else {
+	                indicator.classList.remove("active");
+	            }
+	        });
+	    }
 
+	    selectGame.addEventListener("change", function () {
+	        const selectedGame = selectGame.value;
+	        slides.forEach((slide, index) => {
+	            if (slide.dataset.gameId === selectedGame) {
+	                currentIndex = index;
+	                updateCarousel();
+	            }
+	        });
+	    });
 
+	    nextButton.addEventListener("click", function () {
+	        if (currentIndex < slides.length - 1) {
+	            currentIndex++;
+	        } else {
+	            currentIndex = 0;
+	        }
+	        updateCarousel();
+	    });
 
-// **Funzione per inizializzare i dati dinamicamente**
-function initCarousel() {
-    slides = document.querySelectorAll(".slide");
-    indicators = document.querySelectorAll(".indicator");
+	    prevButton.addEventListener("click", function () {
+	        if (currentIndex > 0) {
+	            currentIndex--;
+	        } else {
+	            currentIndex = slides.length - 1;
+	        }
+	        updateCarousel();
+	    });
 
-    // **Recupera i valori dei giochi dalla select**
-    gameValues = Array.from(document.querySelectorAll("#game option")).map(option => option.value);
+	    // Implementa la funzione goToSlide
+	    function goToSlide(index) {
+	        currentIndex = index;
+	        updateCarousel();
+	    }
 
-    showSlide(0); // Mostra la prima slide
-}
+	    // Collega i pulsanti numerati alla funzione goToSlide
+	    indicators.forEach((indicator, index) => {
+	        indicator.addEventListener("click", function() {
+	            goToSlide(index);
+	        });
+	    });
 
-function updateImageAndInput() {
-    // Trova la slide attiva
-    const activeSlide = slides[currentSlide];
-    
-    // Trova l'immagine e l'input all'interno della slide attiva
-    const gameImg = activeSlide.querySelector("img");
-    const gameInput = document.getElementById('selected-game-img');
-
-    // Aggiorna l'immagine
-    const imageSrc = gameImg.getAttribute('src');
-    document.getElementById('game-img').src = imageSrc;
-    
-    // Aggiorna il valore dell'input nascosto
-    const gameId = gameImg.getAttribute('alt');
-    gameInput.value = gameId;
-}
-
-// **Mostra la slide corretta**
-function showSlide(index) {
-    if (index >= slides.length) { currentSlide = 0; }
-    else if (index < 0) { currentSlide = slides.length - 1; }
-    else { currentSlide = index; }
-
-    document.querySelector(".slides").style.transform = `translateX(${-currentSlide * 100}%)`;
-
-    indicators.forEach((indicator, i) => {
-        indicator.classList.toggle("active", i === currentSlide);
-    });
-
-    aggiornaLabelGioco(); // Aggiorna la select
-}
-
-// **Aggiorna la select in base alla slide attuale**
-function aggiornaLabelGioco() {
-    const gameSelect = document.getElementById("game");
-    if (gameValues[currentSlide]) {
-        gameSelect.value = gameValues[currentSlide];
-    }
-}
-
-// **Sposta avanti/indietro le slide**
-function moveSlide(step) {
-    currentSlide = (currentSlide + step + slides.length) % slides.length; // Calcola l'indice della slide corrente
-    showSlide(currentSlide); // Mostra la slide corretta
-}
-
-// **Vai direttamente a una slide specifica**
-function goToSlide(index) {
-    if (index >= slides.length) index = 0;
-    if (index < 0) index = slides.length - 1;
-
-    currentSlide = index;
-
-    slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === currentSlide);
-    });
-
-    indicators.forEach((indicator, i) => {
-        indicator.classList.toggle("active", i === currentSlide);
-    });
-
-    // Trova la slide attiva
-    const activeSlide = slides[currentSlide];
-    const gameId = activeSlide.getAttribute("data-game-id");
-    const gameImg = activeSlide.querySelector(".game-img").src;
-    
-    // Aggiorna la select
-    document.getElementById("game").value = gameId;
-
-    // Aggiorna l'input nascosto
-    document.querySelector(".game-img-hidden").value = gameImg;
-}
-
-// **Quando cambia la select, aggiorna il carousel**
-function cambiaImmagine() {
-    const selectedOption = document.getElementById('game').selectedOptions[0];
-    const gameId = selectedOption.value;
-
-    // Trova l’indice della slide corrispondente
-    const gameIndex = games.findIndex(game => game.id === gameId);
-
-    if (gameIndex !== -1) {
-        goToSlide(gameIndex); // Cambia la slide nel carosello
-    }
-}
-
-
-function updateCarousel(gameId) {
-    // Trova l'indice del gioco selezionato
-    const gameImages = document.querySelectorAll('.carousel img');
-    const slides = document.querySelectorAll('.slide');
-    
-    // Reset della classe 'active' a tutte le slide
-    slides.forEach(slide => slide.classList.remove('active'));
-
-    gameImages.forEach((img, index) => {
-        // Identifica la slide del gioco selezionato in base al gameId
-        if (img.alt.toLowerCase() === gameId.toLowerCase()) {
-            slides[index].classList.add('active'); // Aggiungi la classe active alla slide selezionata
-        }
-    });
-}
-
-
-// **Avvia il tutto quando la pagina è caricata**
-window.onload = initCarousel;
+	    updateCarousel();
+	});
 </script>
-
 </body>
 <script>
     function togglePassword(fieldId, iconId) {
@@ -317,7 +255,7 @@ window.onload = initCarousel;
         let giocatoriPerSquadra = document.getElementById("giocatoriPerSquadra").value;
         let partecipantiTotali = numSquadre * giocatoriPerSquadra;
         document.getElementById("partecipantiTotali").textContent = partecipantiTotali;
+        document.getElementById("nPlayer").value = partecipantiTotali;
     }
-
 </script>
 </html>
