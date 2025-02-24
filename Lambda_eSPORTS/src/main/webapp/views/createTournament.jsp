@@ -141,11 +141,7 @@
 		</div>		
 	</main>
 	<!-- SCRIPT PER GESTIRE IL CAROUSEL -->
-<<<<<<< HEAD
-	<script>
-=======
 		<script>
->>>>>>> 98a3c394ea17af1814114919b0c7fe8a747554bc
 	document.addEventListener("DOMContentLoaded", function () {
 	    const carousel = document.querySelector(".carousel .slides");
 	    const slides = document.querySelectorAll(".slide");
