@@ -8,12 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Classifica - Lambda Esports</title>
 <link rel="stylesheet" href="/style/amministration.css">
+<link rel="stylesheet" href="/style/footer.css">
 </head>
 <body>
 	<!-- Intestazione della pagina con logo e navigazione -->
 	<header class="header">
 		<h1 class="logo">
-			<a href="home.html">
+			<a href="home.jsp">
 				<div class="logo-img">
 					<img
 						src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Amazon_Lambda_architecture_logo.svg"
@@ -26,37 +27,17 @@
 		</h1>
 		<nav>
 			<ul class="nav-links">
-				<li><a href="home.jsp" class="nav-item">HOME</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="ranking.jsp" class="nav-item">CLASSIFICA</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="tornei.html" class="nav-item">TORNEI</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="areaPersonale.html" class="nav-item">AREA
-						PERSONALE</a></li>
-			</ul>
+                <li><a href="home.jsp" class="nav-item">HOME</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="ranking.jsp" class="nav-item">CLASSIFICA</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="tournaments.jsp" class="nav-item">TORNEI</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="areaPersonale.jsp" class="nav-item">AREA PERSONALE</a></li>
+            </ul>
 		</nav>
 
-		<div class="login-container">
-			<div class="login-box">
-				<h2>Login</h2>
-				<form id="login-form" action="/auth/login" method="post">
-					<div class="input-group">
-						<label for="loginString">Username/Email</label> <input type="text"
-							name="loginString" id="username"
-							placeholder="Inserisci l' username o l'email" required>
-					</div>
-					<div class="input-group">
-						<label for="password">Password</label> <input type="password"
-							name="password" id="password"
-							placeholder="Inserisci la tua password" required>
-					</div>
-					<button type="submit">Accedi</button>
-					<a href="/players/preSignup" class="nav-item"><small>Se
-							non hai un account Registrati qui.</small></a>
-				</form>
-			</div>
-		</div>
+		
 	</header>
 	<main class="ranking-panel">
 		<div class="rank">
@@ -82,6 +63,7 @@
 			</tbody>
 		</table>
 	</main>
+	<%@ include file="footer.jsp" %>
 </body>
 <script>
     function togglePassword(fieldId, iconId) {
