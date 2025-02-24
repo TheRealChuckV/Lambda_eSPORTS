@@ -7,7 +7,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import com.example.demo.model.Player;
 import com.example.demo.model.Tournament;
+import com.example.demo.model.TournamentPlayer;
+import com.example.demo.repository.TournamentPlayerRepository;
 import com.example.demo.repository.TournamentRepository;
 
 @Service
@@ -15,6 +20,66 @@ public class TournamentServiceImpl implements TournamentService {
 
 	@Autowired
 	private TournamentRepository tr;
+
+	@Autowired
+	private TournamentPlayerRepository tpr;
+
+	public boolean joinTournament(int tournamentId, Player player) {
+		Optional<Tournament> optionalTournament = tr.findById(tournamentId);
+
+		if (optionalTournament.isPresent()) {
+			Tournament tournament = optionalTournament.get();
+
+			// Controlla se il giocatore è già iscritto
+			boolean alreadyJoined = tpr.findAll().stream()
+					.anyMatch(tp -> tp.getTournament().getId() == (tournamentId) && tp.getPlayer().equals(player));
+
+			if (alreadyJoined) {
+				return false; // Già iscritto
+			}
+
+			// Riduce i posti disponibili e salva il torneo
+			tournament.addPlayer();
+			tr.save(tournament);
+
+			// Salva la partecipazione nella tabella TournamentPlayer
+			TournamentPlayer tournamentPlayer = new TournamentPlayer(player, tournament);
+			tpr.save(tournamentPlayer);
+
+			return true;
+		}
+
+		return false; // Nessun posto disponibile o torneo inesistente
+	}
+	
+	public List<Tournament> getTournamentsByPlayer(Player player) {
+        List<TournamentPlayer> registrations = tpr.findByPlayer(player);
+        
+        // Estrarre solo i tornei dalla lista di TournamentPlayer
+        return registrations.stream()
+                            .map(TournamentPlayer::getTournament)
+                            .collect(Collectors.toList());
+    }
+	
+	public boolean leaveTournament(int tournamentId, Player player) {
+	    List<TournamentPlayer> registrations = tpr.findByPlayer(player);
+	    Tournament t;
+	    for (TournamentPlayer registration : registrations) {
+	        if (registration.getTournament().getId() == (tournamentId)) {
+	        	t=tr.findById(tournamentId).get();
+	        	t.removePlayer();
+	        	tr.save(t);
+	            tpr.delete(registration);
+	            return true;
+	        }
+	    }
+
+	    return false;
+	}
+	
+	public Optional<Tournament> getById(int id) {
+		return tr.findById(id);
+	}
 
 	// Ottieni tutti gli utenti
 	public List<Tournament> getAllTournaments() {

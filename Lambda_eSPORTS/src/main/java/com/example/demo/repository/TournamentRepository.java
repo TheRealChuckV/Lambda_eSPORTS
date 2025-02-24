@@ -10,9 +10,12 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.Tournament;
 
 @Repository
-public interface TournamentRepository extends CrudRepository<Tournament, Integer>{
-	
+public interface TournamentRepository extends CrudRepository<Tournament, Integer> {
+
 	List<Tournament> findByGameId(int gameId);
+
 	List<Tournament> findByNPlayer(int nPlayer);
-      List<Tournament> findByStartDate(Date startDate);
+
+	List<Tournament> findByStartDate(Date startDate);
+	
 }

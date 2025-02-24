@@ -45,7 +45,7 @@
                 <div class="dropdown-menu">
                     <form id="login-form" action="/auth/login" modelAttribute="playerForm" method="post">
                         <label for="email">Username/Email:</label>
-                        <input type="email" id="email" placeholder="Inserisci email" required>
+                        <input type="text" id="email" placeholder="Inserisci email" required>
 
                         <label for="password">Password:</label>
                         <input type="password" id="password" placeholder="Inserisci password" required>

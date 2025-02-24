@@ -121,7 +121,12 @@
 					<option value="4">4</option>
 					<option value="5">5</option>
 				</select>
-
+				<form:input path="teamSize" type="hidden" id="teamSize"
+					name="teamSize" />
+				<script type="text/javascript">
+    // Recupera il numero di partecipanti dal <span> e imposta il valore del campo nascosto
+    					document.getElementById('teamSize').value = document.getElementById('giocatoriPerSquadra').value;
+						</script>
 				<h3>
 					Partecipanti Totali: <span id="partecipantiTotali">2</span>
 					<form:input path="nPlayer" type="hidden" id="nPlayer"
@@ -136,7 +141,11 @@
 		</div>		
 	</main>
 	<!-- SCRIPT PER GESTIRE IL CAROUSEL -->
+<<<<<<< HEAD
 	<script>
+=======
+		<script>
+>>>>>>> 98a3c394ea17af1814114919b0c7fe8a747554bc
 	document.addEventListener("DOMContentLoaded", function () {
 	    const carousel = document.querySelector(".carousel .slides");
 	    const slides = document.querySelectorAll(".slide");

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.model.Player;
 import com.example.demo.model.Tournament;
 
 public interface TournamentService {
@@ -21,4 +22,12 @@ public interface TournamentService {
 	public Optional<Tournament> getUserById(int id);
 
 	public void deleteTournament(int id);
+	
+	public boolean joinTournament(int id, Player player);
+	
+	public List<Tournament> getTournamentsByPlayer(Player player);
+	
+	public boolean leaveTournament(int tournamentId, Player player);
+	
+	public Optional<Tournament> getById(int id);
 }

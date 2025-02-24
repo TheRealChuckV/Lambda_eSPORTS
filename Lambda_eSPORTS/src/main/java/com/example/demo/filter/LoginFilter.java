@@ -31,7 +31,7 @@ public class LoginFilter implements Filter {
 
 		HttpSession session = req.getSession(false); // Non crea una nuova sessione se non esiste
 		if (session != null) {
-			String user = (String) session.getAttribute("username");
+			String user = (String) session.getAttribute("loginString");
 			if (user != null && !user.isEmpty()) {
 				chain.doFilter(request, response);
 				return;

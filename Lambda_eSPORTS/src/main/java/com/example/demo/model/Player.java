@@ -22,7 +22,6 @@ public class Player {
     private String role;
     private LocalDate dateOfBirth;
     private int score;
-
     
     @OneToMany
     @JoinColumn(name="id_chat")
