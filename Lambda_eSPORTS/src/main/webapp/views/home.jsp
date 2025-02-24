@@ -29,17 +29,17 @@
             <ul class="nav-links">
                 <li><a href="home.jsp" class="nav-item">HOME</a></li>
                 <li><p class="separator">|</p></li>
-                <li><a href="/players/topRanking" class="nav-item">CLASSIFICA</a></li>
+                <li><a href="ranking.jsp" class="nav-item">CLASSIFICA</a></li>
                 <li><p class="separator">|</p></li>
                 <li><a href="tournaments.jsp" class="nav-item">TORNEI</a></li>
                 <li><p class="separator">|</p></li>
-                <li><a href="areaPersonale.html" class="nav-item">AREA PERSONALE</a></li>
+                <li><a href="areaPersonale.jsp" class="nav-item">AREA PERSONALE</a></li>
             </ul>
         </nav>
         <div class="user">
-            <a href="login" class="nav-item">Login</a>
+            <a href="login.jsp" class="nav-item">Login</a>
             <div class="user-icon">
-                <a href="login">
+                <a href="login.jsp">
                     <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Icon">
                 </a>
                 <div class="dropdown-menu">

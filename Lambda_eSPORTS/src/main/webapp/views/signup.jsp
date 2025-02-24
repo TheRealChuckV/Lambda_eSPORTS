@@ -14,7 +14,7 @@
 
 	<header class="header">
 		<h1 class="logo">
-			<a href="home.html">
+			<a href="/views/home.jsp">
 				<div class="logo-img">
 					<img
 						src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Amazon_Lambda_architecture_logo.svg"
@@ -27,15 +27,14 @@
 		</h1>
 		<nav>
 			<ul class="nav-links">
-				<li><a href="home.html" class="nav-item">HOME</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="classifica.html" class="nav-item">CLASSIFICA</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="tornei.html" class="nav-item">TORNEI</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="areaPersonale.html" class="nav-item">AREA
-						PERSONALE</a></li>
-			</ul>
+                <li><a href="home.jsp" class="nav-item">HOME</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="ranking.jsp" class="nav-item">CLASSIFICA</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="tournaments.jsp" class="nav-item">TORNEI</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="areaPersonale.jsp" class="nav-item">AREA PERSONALE</a></li>
+            </ul>
 		</nav>
 	</header>
 	<div class="reg-container">
