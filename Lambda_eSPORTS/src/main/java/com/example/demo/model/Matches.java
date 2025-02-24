@@ -22,7 +22,8 @@ public class Matches {
     @ManyToOne
     @JoinColumn(name = "team2_id")
     private Team team2;
-
+    
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
     private String result;
 

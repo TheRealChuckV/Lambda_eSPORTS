@@ -36,6 +36,8 @@ public class Tournament {
 	private List<Chat> message;
 	@OneToMany(mappedBy="tournament")
 	private List<Matches> matches;
+	@OneToMany(mappedBy="tournament")
+	private List<Team> teams;
 	
 	public Tournament(String name, Date startDate, Date endDate, int nPlayer,int teamSize, String description, String prize,
 			Game game, Player creator) {
@@ -143,6 +145,14 @@ public class Tournament {
 		this.creator = creator;
 	}
 	
+	public List<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(List<Team> teams) {
+		this.teams = teams;
+	}
+
 	public void addPlayer() {
 		this.setActualNPlayer(this.getActualNPlayer()+1);
 	}

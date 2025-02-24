@@ -13,17 +13,28 @@ public class Team {
 
     private String name;
     private String logo;
+    private int size;
 
     @OneToMany(mappedBy = "team") 
     private List<Player> players;
+    
+    @ManyToOne
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
 
     public Team() {
         this.players = new ArrayList<>();
     }
+    
+    public Team(int size) {
+        this.size = size;
+        this.players = new ArrayList<>();
+    }
 
-    public Team(String name, String logo) {
+    public Team(String name, String logo, int size) {
         this.name = name;
         this.logo = logo;
+        this.size = size;
         this.players = new ArrayList<>();
     }
 
@@ -52,7 +63,15 @@ public class Team {
         this.logo = logo;
     }
 
-    public List<Player> getPlayers() {
+    public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public List<Player> getPlayers() {
         return players;
     }
 
@@ -60,7 +79,15 @@ public class Team {
         this.players = players;
     }
 
-    public void addPlayer(Player player) {
+    public Tournament getTournament() {
+		return tournament;
+	}
+
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
+	}
+
+	public void addPlayer(Player player) {
         this.players.add(player);
         player.setTeam(this); 
     }

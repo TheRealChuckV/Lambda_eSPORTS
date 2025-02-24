@@ -1,21 +1,32 @@
 package com.example.demo.ctr;
 
+import com.example.demo.model.Player;
 import com.example.demo.model.Team;
+import com.example.demo.model.Tournament;
+import com.example.demo.service.PlayerServiceImpl;
 import com.example.demo.service.TeamServiceImpl;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/teams")
+@Controller
+@RequestMapping("/teams")
 public class TeamCtr {
 
     @Autowired
     private TeamServiceImpl teamService;
+    @Autowired
+    private PlayerServiceImpl ps;
 
     @GetMapping
     public List<Team> getAllTeams() {
@@ -32,10 +43,22 @@ public class TeamCtr {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Team> createTeam(@RequestBody Team team) {
-        Team createdTeam = teamService.saveTeam(team);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTeam);
+    @GetMapping("/create")
+    public String showCreateTeam(Model model,HttpSession session) {
+        model.addAttribute("teamForm", new Team());
+        return "createTeam"; // La vista JSP o HTML per il form
+    }
+
+    // Aggiungi il team al database
+    @PostMapping("/create")
+    public String createTeam(@ModelAttribute Team team, HttpSession session) {
+        // Salva il team nel database
+    	Optional<Tournament> t = (Optional<Tournament>) session.getAttribute("tournament");
+    	Tournament tournament = t.orElseThrow(() -> new RuntimeException("Torneo non trovato nella sessione!"));
+    	team.setSize(tournament.getTeamSize());
+    	team.setTournament(tournament);
+    	teamService.saveTeam(team);
+        return "viewTournament"; // Redirigi alla lista dei team dopo il salvataggio
     }
 
     @PutMapping("/update/{id}")
@@ -52,6 +75,16 @@ public class TeamCtr {
     public ResponseEntity<Void> deleteTeam(@PathVariable int id) {
         teamService.deleteTeam(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    @PostMapping("/add/{id}")
+    public String addToTeam(@PathVariable int id,  HttpSession session) {
+    	String s = (String) session.getAttribute("loginString");
+    	Player p;
+    	if(s.contains("@")) p = ps.getPlayerByEmail(s);
+    	else p = ps.getPlayerByUsername(s);
+    	ps.addPlayerToTeam(id, p);
+    	return "redirect:/tournaments/view/" + id;
     }
     
     @GetMapping("/participants")

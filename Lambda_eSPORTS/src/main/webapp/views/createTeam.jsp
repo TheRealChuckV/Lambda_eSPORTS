@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crea Torneo - Lambda Esports</title>
+<title>Crea il team</title>
 <link rel="stylesheet" href="/style/amministration.css">
 </head>
 <body>
+
 	<!-- Intestazione della pagina con logo e navigazione -->
 	<header class="header">
 		<h1 class="logo">
@@ -58,49 +57,22 @@
 			</div>
 		</div>
 	</header>
-	<main class="view-tournament">
-		<div>
-		
-			<form action="/teams/create" method="get">
-				<button type="submit">Crea Team</button>
-				<input  type="hidden" name="teamSize"
-					value="${tournament.teamSize}" />
-			</form>
+	<main class="create-tournament">
+		<div class="CT">
+			<h1>Crea un nuovo Team</h1>
 		</div>
-		<div>
-			<h2>Lista Team</h2>
-			<table class="lista-partecipazioni">
-				<thead>
-					<tr>
-						<th>Icona</th>
-						<th>Nome Team</th>
-						<th>Gestisci</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="team" items="${tournament.teams}">
-						<tr>
-							<td><img src="${team.logo}" alt="Icona Team"></td>
-							<td>${team.name}</td>
-							<td>
-								<ul class="player-list">
-									<c:forEach var="player" items="${team.players}">
-										<li>${player.username}</li>
-									</c:forEach>
-								</ul>
-							</td>
-							<td>
-								<form action="/teams/${team.id}" method="get"
-									style="display: inline;">
-									<button class="edit" type="submit">Entra</button>
-								</form>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+		<div class="form-container">
+			<form:form action="/teams/create" modelAttribute="teamForm"
+				method="post">
+				<label for="team-name">Nome Team</label>
+				<form:input path="name" type="text" id="team-name"
+					name="team-name" required="true" />
+				<label for="url-name">URL immagine</label>
+				<form:input path="logo" type="text" id="url-name"
+					name="url-name" required="true" />
+				<button type="submit">Crea Team</button>
+			</form:form>
 		</div>
 	</main>
-
-</body>
+	</body>
 </html>
