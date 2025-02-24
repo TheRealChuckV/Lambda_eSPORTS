@@ -1,13 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tornei Disponibili - Lambda Esports</title>
-    <link rel="stylesheet" href="amministrazione.css"> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crea Torneo - Lambda Esports</title>
+<link rel="stylesheet" href="/style/amministration.css">
+<link rel="stylesheet" href="/style/footer.css">
 </head>
 <body>
-     <!-- Intestazione della pagina con logo e navigazione -->
+  <!-- Intestazione della pagina con logo e navigazione -->
      <header class="header">
         <h1 class="logo">
             <a href="home.html">
@@ -51,44 +56,41 @@
             </div>
         </div>
     </header>
-    
-    <main class="tournament-list">
-        <div class="Disp"><h1>Tornei Disponibili</h1></div>
-        <table class="tournament-table">
+
+    <main class="profile-container">
+        <h1>Area Personale</h1>
+        <table class="stats-table">
             <thead>
                 <tr>
-                    <th>Nome Torneo</th>
-                    <th>Gioco</th>
-                    <th>Data</th>
-                    <th>Posti Disponibili</th>
-                    <th>Azioni</th>
+                    <th>Statistiche</th>
+                    <th>Valore</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Torneo CoD</td>
-                    <td>Call Of Duty</td>
-                    <td>20/02/2025</td>
-                    <td>22/30</td>
-                    <td><button class="join-btn">Iscriviti</button></td>
+                    <td>Tornei Conclusi</td>
+                    <td>12</td>
                 </tr>
                 <tr>
-                    <td>Torneo FIFA</td>
-                    <td>FIFA 2025</td>
-                    <td>22/02/2025</td>
-                    <td>8/32</td>
-                    <td><button class="join-btn">Iscriviti</button></td>
+                    <td>Tornei Attivi</td>
+                    <td>3</td>
                 </tr>
                 <tr>
-                    <td>Torneo Valorant</td>
-                    <td>Valorant</td>
-                    <td>24/02/2025</td>
-                    <td>10/10</td>
-                    <td><button class="join-btn">Iscriviti</button></td>
+                    <td>Vittorie</td>
+                    <td>7</td>
                 </tr>
+                <tr>
+                    <td>Sconfitte</td>
+                    <td>5</td>
+                </tr>               
             </tbody>
+            </table>
+            <a href="amministrazione.html">
+                <button class="adimn-btn">Gestisci i tuoi Tornei</button>
+            </a>
         </table>
     </main>
+    <%@ include file="footer.jsp" %>
 </body>
 <script>
     function togglePassword(fieldId, iconId) {

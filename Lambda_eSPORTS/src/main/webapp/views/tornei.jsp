@@ -1,13 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tornei - Lambda Esports</title>
-    <link rel="stylesheet" href="amministrazione.css"> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crea Torneo - Lambda Esports</title>
+<link rel="stylesheet" href="/style/amministration.css">
+<link rel="stylesheet" href="/style/footer.css">
 </head>
 <body>
-     <!-- Intestazione della pagina con logo e navigazione -->
+ <!-- Intestazione della pagina con logo e navigazione -->
      <header class="header">
         <h1 class="logo">
             <a href="home.html">
@@ -61,6 +66,7 @@
                 <button class onclick="location.href='tuoiTornei.html'">Tornei A Cui Partecipi</button>
             </div>
         </main>
+        <%@ include file="footer.jsp" %>
 </body>
 <!-- Script finestra login --> 
 <script>

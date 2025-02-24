@@ -1,13 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestione Tornei - Lambda Esports</title>
-    <link rel="stylesheet" href="amministrazione.css"> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crea Torneo - Lambda Esports</title>
+<link rel="stylesheet" href="/style/amministration.css">
+<link rel="stylesheet" href="/style/footer.css">
 </head>
 <body>
-     <!-- Intestazione della pagina con logo e navigazione -->
+ <!-- Intestazione della pagina con logo e navigazione -->
      <header class="header">
         <h1 class="logo">
             <a href="home.html">
@@ -27,7 +32,7 @@
                 <li><p class="separator">|</p></li>
                 <li><a href="tornei.html" class="nav-item">TORNEI</a></li>
                 <li><p class="separator">|</p></li>
-                <li><a href="areaPersonale.html" class="nav-item">AREA PERSONALE</a></li>
+                <li><a href="areaPersonale.html" class="nav-item active">AREA PERSONALE</a></li>
             </ul>
         </nav>
     
@@ -87,6 +92,7 @@
             </section>
             
         </main>
+        <%@ include file="footer.jsp" %>
     </body>
     <script>
         function togglePassword(fieldId, iconId) {
@@ -160,7 +166,7 @@ confirmNo.addEventListener("click", function () {
     </script>
     <div id="popup-conferma" class="popup">
         <p>Vuoi davvero eliminare il torneo?</p>
-        <button id="confirm-yes">Sì</button>
+        <button id="confirm-yes">SÃ¬</button>
         <button id="confirm-no">No</button>
     </div>
     </html>

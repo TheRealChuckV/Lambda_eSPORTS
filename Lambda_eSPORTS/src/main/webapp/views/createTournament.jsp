@@ -133,7 +133,7 @@
 						</script>
 				<button type="submit" class="submit-btn">Crea Torneo</button>
 			</form:form>
-		</div>
+		</div>		
 	</main>
 	<!-- SCRIPT PER GESTIRE IL CAROUSEL -->
 	<script>
