@@ -8,12 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tornei - Lambda Esports</title>
 <link rel="stylesheet" href="/style/amministration.css">
+<link rel="stylesheet" href="/style/footer.css">
 </head>
 <body>
 	<!-- Intestazione della pagina con logo e navigazione -->
 	<header class="header">
 		<h1 class="logo">
-			<a href="home.html">
+			<a href="home.jsp">
 				<div class="logo-img">
 					<img
 						src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Amazon_Lambda_architecture_logo.svg"
@@ -26,15 +27,14 @@
 		</h1>
 		<nav>
 			<ul class="nav-links">
-				<li><a href="home.jsp" class="nav-item">HOME</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="ranking.html" class="nav-item">CLASSIFICA</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="tournament.jsp" class="nav-item">TORNEI</a></li>
-				<li><p class="separator">|</p></li>
-				<li><a href="areaPersonale.html" class="nav-item">AREA
-						PERSONALE</a></li>
-			</ul>
+                <li><a href="home.jsp" class="nav-item">HOME</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="ranking.jsp" class="nav-item">CLASSIFICA</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="tournaments.jsp" class="nav-item">TORNEI</a></li>
+                <li><p class="separator">|</p></li>
+                <li><a href="areaPersonale.jsp" class="nav-item">AREA PERSONALE</a></li>
+            </ul>
 		</nav>
 	</header>
 
@@ -59,6 +59,7 @@
 			</form:form>
 		</div>
 	</main>
+	<%@ include file="footer.jsp" %>
 </body>
 <!-- Script finestra login -->
 <script>

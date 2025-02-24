@@ -502,3 +502,121 @@ table tr:nth-child(even) {
     background-color: #ffcc00;
     transform: scale(1.2);
 }
+/* OPZIONI PROFILO -------------------------------------------------------------------- */ 
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: yellowgreen;
+    padding: 20px;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Stile menu */
+.menu-item {
+    margin-bottom: 30px;
+}
+
+.menu-button {
+    width: 50%;
+    padding: 10px;
+    background: yellowgreen;
+    border: none;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-button:hover {
+    background: #ccc;
+}
+
+/* Freccetta */
+.arrow {
+    transition: transform 0.3s ease;
+}
+
+/* Stile submenu */
+.submenu {
+    display: none;
+    padding-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.submenu-button {
+    padding: 8px;
+    background: #333;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.submenu-button:hover {
+    background: #333c58;
+}
+
+/* Mostra submenu attivo */
+.submenu.active {
+    display: block;
+}
+
+.menu-button.active .arrow {
+    transform: rotate(90deg);
+}
+.disconnetti {
+    background-color: red;
+    color: white;
+    border-top: 40px;
+    text-align: center;
+    margin-left: 45%;
+}
+
+.disconnetti:hover {
+    background-color: #353358;
+}
+.user-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover; /* Assicura che l'immagine si adatti bene */
+    margin-right: 10px; /* Spazio tra immagine e testo */
+}
+.submenu-button.selected {
+    background: #6d52e5;
+    color: white;
+}
+.conferma-img {
+    background: yellowgreen;
+    color: white;
+    border-top: 40px;
+    text-align: center;
+}
+/* toast conferma cambiamenti */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
