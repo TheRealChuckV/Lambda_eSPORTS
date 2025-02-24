@@ -34,7 +34,6 @@ public class TournamentCtr {
 	@Autowired
 	private PlayerService ps;
 
-
 	// Aggiunge un torneo nel db
 
 	@GetMapping("/preAddTournament")
@@ -47,7 +46,6 @@ public class TournamentCtr {
 
 	@PostMapping("/addTournament")
 	public String addTournament(@ModelAttribute("tournamentForm") Tournament trmt, HttpSession session) {
-		System.out.println(session);
 		String s = (String) session.getAttribute("loginString");
 
 		if (!s.contains("@"))
@@ -56,6 +54,7 @@ public class TournamentCtr {
 			s = (String) session.getAttribute("email");
 			trmt.setCreator(ps.getPlayerByEmail(s));
 		}
+		System.out.println(trmt.getTeamSize());
 		ts.saveTournament(trmt);
 		return "tournaments";
 	}
@@ -150,7 +149,7 @@ public class TournamentCtr {
 			ts.joinTournament(id, ps.getPlayerByUsername(s));
 		return "tournaments"; // Ricarica la pagina dopo l'iscrizione
 	}
-	
+
 	@GetMapping("/myTournaments")
 	public String myTournaments(Model model, HttpSession session) {
 		String s = (String) session.getAttribute("loginString");
@@ -160,42 +159,38 @@ public class TournamentCtr {
 		else
 			player = ps.getPlayerByUsername(s);
 		List<Tournament> myTournaments = ts.getTournamentsByPlayer(player);
-        model.addAttribute("myTournaments", myTournaments);
+		model.addAttribute("myTournaments", myTournaments);
 		return "myTournaments"; // Nome della pagina JSP senza estensione
 	}
-	
+
 	@PostMapping("/leave/{id}")
 	public String leaveTournament(@PathVariable int id, HttpSession session, Model model) {
-	    String s = (String) session.getAttribute("loginString");
-	    Player player;
-	    System.out.println("popi");
+		String s = (String) session.getAttribute("loginString");
+		Player player;
 		if (s.contains("@"))
 			player = ps.getPlayerByEmail(s);
 		else
 			player = ps.getPlayerByUsername(s);
 
-	    boolean success = ts.leaveTournament(id, player);
+		boolean success = ts.leaveTournament(id, player);
 
-	    if (!success) {
-	        model.addAttribute("error", "Errore nel lasciare il torneo.");
-	    }
+		if (!success) {
+			model.addAttribute("error", "Errore nel lasciare il torneo.");
+		}
 
-	    return "tournaments";
+		return "tournaments";
 	}
-	
+
 	@GetMapping("/view/{id}")
-	public String viewTournament(@PathVariable int id, Model model) {
-	    Optional<Tournament> tournament = ts.getById(id);
-	    
-	    if (tournament == null) {
-	        return "redirect:/my-tournaments"; // Se non esiste, torna indietro
-	    }
+	public String viewTournament(@PathVariable int id, Model model, HttpSession session) {
+		session.setAttribute("tournament", ts.getById(id));
+		Optional<Tournament> tournament = ts.getById(id);
+		if (tournament == null) {
+			return "tournaments"; // Se non esiste, torna indietro
+		}
 
-	    model.addAttribute("tournament", tournament);
-	    return "tournamentDetails"; // Mostra la pagina di dettaglio
+		model.addAttribute("tournament", tournament.get());
+		return "viewTournament"; // Mostra la pagina di dettaglio
 	}
-	
+
 }
-
-
-
