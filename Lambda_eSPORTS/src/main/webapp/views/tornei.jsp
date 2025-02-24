@@ -1,13 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Area Personale - Lambda Esports</title>
-    <link rel="stylesheet" href="amministrazione.css"> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crea Torneo - Lambda Esports</title>
+<link rel="stylesheet" href="/style/amministration.css">
+<link rel="stylesheet" href="/style/footer.css">
 </head>
 <body>
-     <!-- Intestazione della pagina con logo e navigazione -->
+ <!-- Intestazione della pagina con logo e navigazione -->
      <header class="header">
         <h1 class="logo">
             <a href="home.html">
@@ -52,40 +57,18 @@
         </div>
     </header>
 
-    <main class="profile-container">
-        <h1>Area Personale</h1>
-        <table class="stats-table">
-            <thead>
-                <tr>
-                    <th>Statistiche</th>
-                    <th>Valore</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Tornei Conclusi</td>
-                    <td>12</td>
-                </tr>
-                <tr>
-                    <td>Tornei Attivi</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>Vittorie</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>Sconfitte</td>
-                    <td>5</td>
-                </tr>               
-            </tbody>
-            </table>
-            <a href="amministrazione.html">
-                <button class="adimn-btn">Gestisci i tuoi Tornei</button>
-            </a>
-        </table>
-    </main>
+        <main class="tournament-panel">
+            <h1>Gestione Tornei</h1>
+            
+            <div class="tournament-actions">
+                <button class onclick="location.href='creaTorneo.html'">Crea Torneo</button>
+                <button class onclick="location.href='listaTornei.html'">Accedi Ad Un Torneo</button>
+                <button class onclick="location.href='tuoiTornei.html'">Tornei A Cui Partecipi</button>
+            </div>
+        </main>
+        <%@ include file="footer.jsp" %>
 </body>
+<!-- Script finestra login --> 
 <script>
     function togglePassword(fieldId, iconId) {
         var field = document.getElementById(fieldId);
