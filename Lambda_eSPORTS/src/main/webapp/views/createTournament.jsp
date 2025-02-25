@@ -9,12 +9,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crea Torneo - Lambda Esports</title>
 <link rel="stylesheet" href="/style/amministration.css">
+<link rel="stylesheet" href="/style/footer.css">
 </head>
 <body>
 	<!-- Intestazione della pagina con logo e navigazione -->
 	<header class="header">
 		<h1 class="logo">
-			<a href="home.html">
+			<a href="/views/home.jsp">
 				<div class="logo-img">
 					<img
 						src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Amazon_Lambda_architecture_logo.svg"
@@ -27,38 +28,18 @@
 		</h1>
 		<nav>
 			<ul class="nav-links">
-				<li><a href="home.html" class="nav-item">HOME</a></li>
+				<li><a href="/views/home.jsp" class="nav-item">HOME</a></li>
 				<li><p class="separator">|</p></li>
-				<li><a href="classifica.html" class="nav-item">CLASSIFICA</a></li>
+				<li><a href="/views/ranking.jsp" class="nav-item">CLASSIFICA</a></li>
 				<li><p class="separator">|</p></li>
-				<li><a href="tornei.html" class="nav-item">TORNEI</a></li>
+				<li><a href="/views/tournaments.jsp" class="nav-item">TORNEI</a></li>
 				<li><p class="separator">|</p></li>
-				<li><a href="areaPersonale.html" class="nav-item">AREA
+				<li><a href="/views/areaPersonale.jsp" class="nav-item">AREA
 						PERSONALE</a></li>
 			</ul>
 		</nav>
-
-		<div class="user">
-			<a href="login.html" class="nav-item">Login</a>
-			<div class="user-icon">
-				<a href="login.html"> <img
-					src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"
-					alt="User Icon">
-				</a>
-				<div class="dropdown-menu">
-					<form id="login-form">
-						<label for="email">Email:</label> <input type="email" id="email"
-							placeholder="Inserisci email" required> <label
-							for="password">Password:</label> <input type="password"
-							id="password" placeholder="Inserisci password" required>
-
-						<button type="submit">Accedi</button>
-					</form>
-				</div>
-			</div>
-		</div>
 	</header>
-	<main class="create-tournament">
+<main class="create-tournament">
 		<div class="CT">
 			<h1>Crea un nuovo Torneo</h1>
 		</div>
@@ -123,6 +104,10 @@
 				</select>
 				<form:input path="teamSize" type="hidden" id="teamSize"
 					name="teamSize" />
+				<script type="text/javascript">
+    // Recupera il numero di partecipanti dal <span> e imposta il valore del campo nascosto
+    					document.getElementById('teamSize').value = document.getElementById('giocatoriPerSquadra').value;
+						</script>
 				<h3>
 					Partecipanti Totali: <span id="partecipantiTotali">2</span>
 					<form:input path="nPlayer" type="hidden" id="nPlayer"
@@ -134,8 +119,9 @@
 						</script>
 				<button type="submit" class="submit-btn">Crea Torneo</button>
 			</form:form>
-		</div>
+		</div>		
 	</main>
+	<%@ include file="footer.jsp" %>
 	<!-- SCRIPT PER GESTIRE IL CAROUSEL -->
 	<script>
 	document.addEventListener("DOMContentLoaded", function () {

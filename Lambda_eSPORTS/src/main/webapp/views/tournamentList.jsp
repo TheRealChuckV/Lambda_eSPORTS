@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tornei Disponibili - Lambda Esports</title>
 <link rel="stylesheet" href="/style/amministration.css">
+<link rel="stylesheet" href="/style/footer.css">
 </head>
 <body>
 	<!-- Intestazione della pagina con logo e navigazione -->
@@ -70,6 +71,7 @@
 			</tbody>
 		</table>
 	</main>
+	<%@ include file="footer.jsp" %>
 </body>
 <script>
     function togglePassword(fieldId, iconId) {

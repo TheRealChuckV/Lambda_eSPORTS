@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <link rel="stylesheet" href="/style/amministration.css">
+
 </head>
 <body>
 	<!-- Intestazione della pagina con logo e navigazione -->
@@ -70,6 +71,7 @@
 			
 			
 		</tbody>
+		
 	</table>
 
 	<script>
@@ -143,4 +145,5 @@
 });
         </script>
 </body>
+
 </html>
