@@ -265,209 +265,131 @@ table tr:nth-child(even) {
     font-size: 16px;
 }
 
-/* carosello */ 
-
-.slider {
-    width: 90%; /* Adatta la larghezza in base al form */
-    height: 300px; /* Riduci l'altezza per allinearlo meglio */
-    margin: 0 auto; 
+/* ======== CAROSELLO ======== */
+.carousel-container {
+    width: 90%;
+    height: 450px;
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
-    z-index: 1;
-}
-
-.slides::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-.slides::-webkit-scrollbar-thumb {
-    background: black;
-    border-radius: 10px;
-}
-
-.slides::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.slides > div {
-    scroll-snap-align: start;
-    flex-shrink: 0;
-    width: 100%; /* Occupa tutta la larghezza disponibile */
-    height: auto; /* L'altezza può variare automaticamente per mantenere il formato */
-   /* margin-right: 50px; */
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Riempi la slide senza distorsioni */
-}
-
-/* Tasti di navigazione per 1, 2, 3 */
-.slider > a {
-    display: inline-flex;
-    width: 1.5rem;
-    height: 1.5rem;
-    background: white;
-    text-decoration: none;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin: 0 0 0.5rem 0;
-    position: relative;
-}
-
-.slider > a:active {
-    top: 1px;
-}
-
-.slider > a:focus {
-    background: #000;
-}
-
-/* Slide con immagini personalizzate */
-#slide-1, #slide-2, #slide-3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-.carousel-indicators {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-}
-
-.carousel-indicators a {
-    width: 30px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.5);
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: background 0.3s;
-}
-
-.carousel-indicators a:hover {
-    background: #ffcc00;
+    margin: 0 auto; /* Centra il carosello */
+	border-radius: 20px;
 }
 
 .carousel {
-    position: relative;
-    width: 100%; /* Contenitore a larghezza piena */
-    overflow: hidden; /* Nascondi le immagini fuori dal contenitore */
+    display: flex;
+    transition: transform 0.5s ease-in-out;
 }
 
-/* Contenitore di tutte le slide */
-.slides {
-    display: flex; /* Allineamento delle immagini in orizzontale */
-    transition: transform 0.5s ease-in-out; /* Transizione per lo spostamento */
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
 }
 
-/* Ogni immagine deve occupare tutta la larghezza */
+.slide.active {
+    opacity: 1;
+}
+
 .slide img {
     width: 100%;
-    height: auto;
-    border-radius: 20px;
+    height: 100%;
+    object-fit: cover;
 }
+
+.game-title {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffcc00;
+    padding: 8px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Pulsanti del carosello */
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background: rgba(255, 204, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+/* Indicatori */
 .carousel-indicators {
     text-align: center;
     margin-top: 10px;
 }
 
 .indicator {
-    cursor: pointer;
-    padding: 1px;
-    margin: 4px;
-    font-size: 16px;
-}
-
-.indicator.active {
-    font-weight: bold;
-}
-
-/* Titoli sui giochi */
-.game-title {
-    position: absolute;
-    bottom: 45%; /* Puoi regolare questo valore per posizionarlo più in alto o più in basso */
-    left: 50%; /* Centra orizzontalmente */
-    transform: translateX(-50%); /* Sposta il titolo a sinistra di metà della sua larghezza */
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.75);
-    padding: 5px;
-    border-radius: 5px;
-    visibility: visible;
-}
-
-/* Pulsanti di navigazione */
-.prev-btn, .next-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 30px;
-    transition: 0.3s;
-}
-
-.prev-btn { left: 10px; }
-.next-btn { right: 10px; }
-
-.prev-btn:hover, .next-btn:hover {
-    background: rgba(255, 204, 0, 0.8);
-}
-
-/* Indicatori numerati */
-.carousel-indicators {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-}
-
-.indicator {
-    width: 30px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.5);
-    color: black;
-    text-align: center;
-    line-height: 30px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 5px;
+    background-color: #555;
     border-radius: 50%;
     cursor: pointer;
-    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .indicator:hover, .indicator.active {
-    background: #ffcc00;
+    background-color: #ffcc00;
+    transform: scale(1.2);
 }
-.slide {
-   display: none;
+/* Indicatori numerati */
+.carousel-indicators {
+    text-align: center;
+    margin-top: 10px;
+    position: relative; /* Aggiungi questa proprietà */
+    z-index: 10; /* Imposta un valore z-index maggiore per farli stare sopra il carosello */
 }
 
-.slide.active {
-    display: block;
+.indicator {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin: 5px;
+    background-color: #555;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    z-index: 1; /* Imposta un z-index per gli indicatori */
+	text-align: center; 
+	line-height: 24px;
 }
+
+.indicator:hover, .indicator.active {
+    background-color: #ffcc00;
+    transform: scale(1.2);
+}
+
 /* OPZIONI PROFILO -------------------------------------------------------------------- */ 
 /* Sidebar */
 .sidebar {
